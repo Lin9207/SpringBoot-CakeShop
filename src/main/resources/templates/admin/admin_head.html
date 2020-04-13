@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<nav class="navbar navbar-default" role="navigation" th:fragment="admin_head">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="">蛋糕店后台</a>
+        </div>
+        <div>
+            <ul class="nav navbar-nav">
+                <li><a th:href="@{/admin/order/list}">订单管理</a></li>
+                <li><a th:href="@{/admin/user/list}">客户管理</a></li>
+                <li><a th:href="@{/admin/good/list}">商品管理</a></li>
+                <li><a th:href="@{/admin/type/list}">类目管理</a></li>
+                <li><a th:href="@{/admin/user/edit}">修改密码</a></li>
+                <li><a th:href="@{~/user/logout}">退出</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+</html>

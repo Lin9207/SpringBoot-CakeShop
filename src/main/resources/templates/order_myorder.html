@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>我的订单</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link type="text/css" rel="stylesheet" th:href="@{~/css/bootstrap.css}">
+    <link type="text/css" rel="stylesheet" th:href="@{~/css/style.css}">
+    <script type="text/javascript" th:src="@{~/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{~/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{~/layer/layer.js}"></script>
+    <script type="text/javascript" th:src="@{~/js/cart.js}"></script>
+</head>
+<body>
+
+<!--header-->
+<div th:replace="~{commons/commons.html::header(activeType='order_myorder.html')}"></div>
+<!--//header-->
+
+<!--cart-items-->
+<div class="cart-items">
+    <div class="container">
+        <h2>我的订单</h2>
+        <table class="table table-bordered table-hover">
+            <tr>
+                <th width="7%">ID</th>
+                <th width="10%">总价</th>
+                <th width="20%">商品详情</th>
+                <th width="20%">收货信息</th>
+                <th width="10%">订单状态</th>
+                <th width="10%">支付方式</th>
+                <th width="10%">下单时间</th>
+                <th width="13%">操作</th>
+            </tr>
+            <div th:if="${orderList}!=null">
+                <tr th:each="order:${orderList}">
+                    <td>
+                        <p th:text="${order.getId()}"></p>
+                    </td>
+                    <td>
+                        <p th:text="${order.getTotal()}"></p>
+                    </td>
+                    <td>
+                        <div th:each="item:${order.getItemList()}">
+                            <p th:text="${item.getName()}+'('+${item.getPrice()}+')x'+${item.getAmount()}"></p>
+                        </div>
+                    </td>
+                    <td>
+                        <p th:text="${order.getName()}"></p>
+                        <p th:text="${order.getPhone()}"></p>
+                        <p th:text="${order.getAddress()}"></p>
+                    </td>
+                    <td>
+                        <p th:switch="${order.getStatus()}">
+                            <span style="color: red;" th:case="1">未支付</span>
+                            <span style="color: blue;" th:case="2">已支付</span>
+                            <span style="color: green;" th:case="3">配送中</span>
+                            <span style="color: #cccccc;" th:case="4">已完成</span>
+                        </p>
+                    </td>
+                    <td>
+                        <div th:switch="${order.getPaytype()}">
+                            <p th:case="1">微信</p>
+                            <p th:case="2">支付宝</p>
+                            <p th:case="3">货到付款</p>
+                        </div>
+                    </td>
+                    <td>
+                        <p th:text="${#dates.format(order.getDatetime(),'yyyy-MM-dd HH:mm:ss')}"></p>
+                    </td>
+                    <td>
+                        <a th:class="${order.getStatus()!=4?'btn btn-danger disabled':'btn btn-danger'}"
+                           th:href="@{'/order/delete/'+${order.getId()}}">删除</a>
+                    </td>
+                </tr>
+            </div>
+        </table>
+    </div>
+</div>
+<!--//cart-items-->
+
+<!--footer-->
+<div th:replace="~{commons/commons.html::footer}"></div>
+<!--//footer-->
+
+</body>
+</html>

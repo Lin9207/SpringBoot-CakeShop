@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!--header-->
+<div class="header" th:fragment="header">
+    <div class="container">
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <h1 class="navbar-brand"><a th:href="@{/}">蛋糕店</a></h1>
+            </div>
+            <!--navbar-header-->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a th:href="@{/}" th:class="${activeType=='index.html'?'active':''}">首页</a></li>
+                    <li class="dropdown">
+                        <a href="#"
+                           th:class="${activeType=='good_list.html'?'dropdown-toggle active':'dropdown-toggle'}"
+                           data-toggle="dropdown">商品分类<b class="caret"></b></a>
+                        <ul class="dropdown-menu multi-column columns-2">
+                            <li>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <h4>商品分类</h4>
+                                        <ul class="multi-column-dropdown">
+                                            <li><a class="list" th:href="@{/good/list/0}" th:text="所有系列"></a></li>
+                                            <div th:each="type:${#servletContext.getAttribute('typeList')}">
+                                                <li>
+                                                    <!--suppress ThymeleafVariablesResolveInspection 抑制爆红-->
+                                                    <a class="list" th:href="@{'/good/list/'+${type.getId()}}"
+                                                       th:text="${type.getName()}"></a>
+                                                </li>
+                                            </div>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a th:href="@{/good/recommend(type=2)}"
+                           th:class="${activeType=='good_recommend2.html'?'active':''}">热销</a></li>
+                    <li><a th:href="@{/good/recommend(type=3)}"
+                           th:class="${activeType=='good_recommend3.html'?'active':''}">新品</a></li>
+
+                    <!--未登录-->
+                    <li th:if="${session.loginUser==null}">
+                        <a th:href="@{/user/register}" th:class="${activeType=='user_register.html'?'active':''}">注册</a>
+                    </li>
+                    <li th:if="${session.loginUser==null}">
+                        <a th:href="@{/user/login}" th:class="${activeType=='user_login.html'?'active':''}">登录</a>
+                    </li>
+
+                    <!--已登录-->
+                    <li th:if="${session.loginUser!=null}">
+                        <a th:href="@{/order/myOrder}"
+                           th:class="${activeType=='order_myorder.html'?'active':''}">我的订单</a>
+                    </li>
+                    <li th:if="${session.loginUser!=null}">
+                        <a th:href="@{/user/myCenter}" th:class="${activeType=='my_center.html'?'active':''}">个人中心</a>
+                    </li>
+                    <li th:if="${session.loginUser!=null}">
+                        <a th:href="@{/user/logout}">退出</a>
+                    </li>
+
+                    <!--已登录 并且是管理员则显示-->
+                    <li th:if="${session.loginUser!=null && session.loginUser.getIsadmin()}">
+                        <a th:href="@{/admin/}" target="_blank">后台管理</a>
+                    </li>
+                </ul>
+                <!--/.navbar-collapse-->
+            </div>
+            <!--//navbar-header-->
+        </nav>
+        <div class="header-info">
+            <!--搜索-->
+            <div class="header-right search-box">
+                <a href="javascript:;"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
+                <div class="search">
+                    <form class="navbar-form" th:action="@{/good/search}">
+                        <input type="text" class="form-control" name="searchName">
+                        <button type="submit" class="btn btn-default" aria-label="Left Align">搜索</button>
+                    </form>
+                </div>
+            </div>
+            <!--购物车-->
+            <div class="header-right cart">
+                <a th:href="@{/good/cart}" th:class="${activeType=='good_cart.html'?'active':''}">
+                    <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true">
+                        <span class="card_num" style="float: right" th:if="${session.userOrder}!=null" th:text="${session.userOrder.getAmount()}"></span>
+                    </span>
+                </a>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+<!--//header-->
+
+<!--footer-->
+<div class="footer" th:fragment="footer">
+    <div class="container">
+        <div class="text-center">
+            <p>青山不语 - www.cyan.com © All rights Reseverd</p>
+        </div>
+    </div>
+</div>
+<!--//footer-->
+
+</html>

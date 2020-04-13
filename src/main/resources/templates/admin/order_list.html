@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>订单列表</title>
+    <link rel="stylesheet" th:href="@{~/admin/css/bootstrap.css}"/>
+</head>
+<body>
+<div class="container-fluid">
+
+    <!--head-->
+    <div th:replace="~{admin/admin_head.html::admin_head}"></div>
+
+    <br>
+    <ul role="tablist" class="nav nav-tabs">
+        <li th:class="${status==0?'active':''}" role="presentation">
+            <a th:href="@{/admin/order/list}">全部订单</a>
+        </li>
+        <li th:class="${status==1?'active':''}" role="presentation">
+            <a th:href="@{/admin/order/list(status=1)}">未付款</a>
+        </li>
+        <li th:class="${status==2?'active':''}" role="presentation">
+            <a th:href="@{/admin/order/list(status=2)}">已付款</a>
+        </li>
+        <li th:class="${status==3?'active':''}" role="presentation">
+            <a th:href="@{/admin/order/list(status=3)}">配送中</a>
+        </li>
+        <li th:class="${status==4?'active':''}" role="presentation">
+            <a th:href="@{/admin/order/list(status=4)}">已完成</a>
+        </li>
+    </ul>
+
+    <br>
+
+    <table class="table table-bordered table-hover">
+
+        <tr>
+            <th width="5%">ID</th>
+            <th width="5%">总价</th>
+            <th width="15%">商品详情</th>
+            <th width="20%">收货信息</th>
+            <th width="10%">订单状态</th>
+            <th width="10%">支付方式</th>
+            <th width="10%">下单用户</th>
+            <th width="10%">下单时间</th>
+            <th width="10%">操作</th>
+        </tr>
+
+        <tr th:if="${orderList}!=null" th:each="order:${orderList}">
+
+            <td><p th:text="${order.getId()}"></p></td>
+            <td><p th:text="${order.getTotal()}"></p></td>
+            <td>
+                <div th:each="item:${order.getItemList()}">
+                    <p th:text="${item.getName()}+'('+${item.getPrice()}+')x'+${item.getAmount()}"></p>
+                </div>
+            </td>
+
+            <td>
+                <p th:text="${order.getName()}"></p>
+                <p th:text="${order.getPhone()}"></p>
+                <p th:text="${order.getAddress()}"></p>
+            </td>
+
+            <td>
+                <p th:switch="${order.getStatus()}">
+                    <span style="color: red;" th:case="1">未支付</span>
+                    <span style="color: blue;" th:case="2">已支付</span>
+                    <span style="color: green;" th:case="3">配送中</span>
+                    <span style="color: #cccccc;" th:case="4">已完成</span>
+                </p>
+            </td>
+            <td>
+                <div th:switch="${order.getPaytype()}">
+                    <p th:case="1">微信</p>
+                    <p th:case="2">支付宝</p>
+                    <p th:case="3">货到付款</p>
+                </div>
+            </td>
+            <td><p th:text="${order.getName()}"></p></td>
+            <td>
+                <p th:text="${#dates.format(order.getDatetime(),'yyyy-MM-dd HH:mm:ss')}"></p>
+            </td>
+            <td>
+                <a th:if="${order.getStatus()}==2" class="btn btn-success"
+                   th:href="@{'/admin/order/update/'+ ${order.getId()}(status=3)}">发货</a>
+                <a th:if="${order.getStatus()}==3" class="btn btn-warning"
+                   th:href="@{'/admin/order/update/'+ ${order.getId()}(status=4)}">完成</a>
+                <a class="btn btn-danger"
+                   th:href="@{'/admin/order/delete/'+ ${order.getId()}(status=${order.getStatus()})}">删除</a>
+            </td>
+        </tr>
+
+    </table>
+
+    <br>
+    <div style='text-align:center;'>
+        <a class='btn btn-info' href='http://localhost:8080/test_cakeshop_jsp/admin/orderList.action?page=1'>首页</a>
+        <a class='btn btn-info' href='http://localhost:8080/test_cakeshop_jsp/admin/orderList.action?page=3'>上一页</a>
+        <h2 style='display:inline;'>[4/5]</h2>
+        <h2 style='display:inline;'>[42]</h2>
+        <a class='btn btn-info' href='http://localhost:8080/test_cakeshop_jsp/admin/orderList.action?page=5'>下一页</a>
+        <a class='btn btn-info' href='http://localhost:8080/test_cakeshop_jsp/admin/orderList.action?page=5'>尾页</a>
+        <input type='text' class='form-control' style='display:inline;width:60px;' value=''/><a class='btn btn-info'
+                                                                                                href='javascript:void(0);'
+                                                                                                onclick='location.href="http://localhost:8080/test_cakeshop_jsp/admin/orderList.action?page="+(this.previousSibling.value)+""'>GO</a>
+    </div>
+    <br>
+</div>
+</body>
+</html>

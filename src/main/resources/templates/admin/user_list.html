@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>客户列表</title>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" th:href="@{~/admin/css/bootstrap.css}"/>
+</head>
+<body>
+<div class="container-fluid">
+
+    <!--head-->
+    <div th:replace="~{admin/admin_head.html::admin_head}"></div>
+
+    <!--输出Controller返回的信息-->
+    <div class="alert alert-success" th:if="${msg}!=null" th:text="${msg}"></div>
+    <div class="alert alert-danger" th:if="${failMsg}!=null" th:text="${failMsg}"></div>
+
+    <div class="text-right">
+        <a class="btn btn-warning" th:href="@{/admin/user/save}">添加客户</a>
+    </div>
+
+    <br>
+
+    <table class="table table-bordered table-hover">
+
+        <tr>
+            <th width="3%">ID</th>
+            <th width="10%">用户名</th>
+            <th width="10%">邮箱</th>
+            <th width="10%">收件人</th>
+            <th width="10%">电话</th>
+            <th width="10%">地址</th>
+            <th width="12%">操作</th>
+        </tr>
+
+    <div th:if="${userList}!=null" th:each="user:${userList}">
+        <tr th:if="!${user.getIsadmin()}">
+            <td>
+                <p th:text="${user.getId()}"></p>
+            </td>
+            <td>
+                <p th:text="${user.getUsername()}"></p>
+            </td>
+            <td>
+                <p th:text="${user.getEmail()}"></p>
+            </td>
+            <td>
+                <p th:text="${user.getName()}"></p>
+            </td>
+            <td>
+                <p th:text="${user.getPhone()}"></p>
+            </td>
+            <td>
+                <p th:text="${user.getAddress()}"></p>
+            </td>
+            <td>
+                <a class="btn btn-info"
+                   th:href="@{'/admin/user/reset/' + ${user.getId()}(username=${user.getUsername()},email=${user.getEmail()})}">重置密码</a>
+                <a class="btn btn-primary" th:href="@{'/admin/user/update/' + ${user.getId()}}">修改</a>
+                <a class="btn btn-danger" th:href="@{'/admin/user/delete/' + ${user.getId()}}">删除</a>
+            </td>
+        </tr>
+    </div>
+
+    </table>
+
+    <br>
+    <div style='text-align:center;'>
+        <a class='btn btn-info' disabled>首页</a>
+        <a class='btn btn-info' disabled>上一页</a>
+        <h2 style='display:inline;'>[1/1]</h2>
+        <h2 style='display:inline;'>[2]</h2>
+        <a class='btn btn-info' disabled>下一页</a>
+        <a class='btn btn-info' disabled>尾页</a>
+        <input type='text' class='form-control' style='display:inline;width:60px;' value=''/><a class='btn btn-info'
+                                                                                                href='javascript:void(0);'
+                                                                                                onclick='location.href="http://localhost:8080/test_cakeshop_jsp/admin/userList.action?page="+(this.previousSibling.value)+""'>GO</a>
+    </div>
+    <br>
+</div>
+</body>
+</html>

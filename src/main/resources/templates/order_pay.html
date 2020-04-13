@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>支付</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link type="text/css" rel="stylesheet" th:href="@{~/css/bootstrap.css}">
+    <link type="text/css" rel="stylesheet" th:href="@{~/css/style.css}">
+    <script type="text/javascript" th:src="@{~/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{~/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{~/layer/layer.js}"></script>
+    <script type="text/javascript" th:src="@{~/js/cart.js}"></script>
+</head>
+<body>
+
+<!--header-->
+<div th:replace="~{commons/commons.html::header}"></div>
+<!--//header-->
+
+<div class="cart-items">
+    <div class="container">
+        <h2>确认收货信息</h2>
+        <form class="form-horizontal" th:action="@{/order/paySuccess}" method="post" id="payform">
+            <div class="row">
+                <label class="control-label col-md-1">收货人</label>
+                <div class="col-md-6">
+                    <input type="text" class="form-control" name="name" th:value="${session.loginUser.getName()}"
+                           style="height: auto; padding: 10px;" placeholder="输入收货人" required="required"><br>
+                </div>
+            </div>
+            <div class="row">
+                <label class="control-label col-md-1">收货电话</label>
+                <div class="col-md-6">
+                    <input type="text" class="form-control" name="phone" th:value="${session.loginUser.getPhone()}"
+                           style="height: auto; padding: 10px;" placeholder="输入收货电话" required="required"><br>
+                </div>
+            </div>
+            <div class="row">
+                <label class="control-label col-md-1">收货地址</label>
+                <div class="col-md-6">
+                    <input type="text" class="form-control" name="address" th:value="${session.loginUser.getAddress()}"
+                           style="height: auto; padding: 10px;" placeholder="输入收货地址" required="required"><br>
+                </div>
+            </div>
+
+            <br>
+            <hr>
+            <br>
+
+            <h2>选择支付方式</h2>
+            <h3 th:text="'订单编号: '+${session.userOrder.getId()}+' 支付金额: '+${session.userOrder.getTotal()}"></h3>
+            <br> <br>
+            <div class="col-sm-6 col-md-4 col-lg-3 ">
+                <label>
+                    <div class="thumbnail">
+                        <input type="radio" name="paytype" value="1" checked="checked"/>
+                        <img th:src="@{~/images/wechat.jpg}" alt="微信支付">
+                    </div>
+                </label>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-3 ">
+                <label>
+                    <div class="thumbnail">
+                        <input type="radio" name="paytype" value="2"/>
+                        <img th:src="@{~/images/alipay.jpg}" alt="支付宝支付"> </a>
+                    </div>
+                </label>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-3 ">
+                <label>
+                    <div class="thumbnail">
+                        <input type="radio" name="paytype" value="3"/>
+                        <img th:src="@{~/images/offline.jpg}" alt="货到付款"> </a>
+                    </div>
+                </label>
+            </div>
+            <div class="clearfix"></div>
+            <div class="register-but text-center">
+                <input type="submit" value="确认订单">
+                <div class="clearfix"></div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<!--footer-->
+<div th:replace="~{commons/commons.html::footer}"></div>
+<!--//footer-->
+
+<script type="text/javascript">
+    function dopay(paytype) {
+        $("#paytype").val(paytype);
+        $("#payform").submit();
+    }
+</script>
+
+</body>
+</html>

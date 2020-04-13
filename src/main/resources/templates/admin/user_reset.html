@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>重置密码</title>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" th:href="@{~/admin/css/bootstrap.css}"/>
+</head>
+<body>
+<div class="container-fluid">
+
+    <!--head-->
+    <div th:replace="~{admin/admin_head.html::admin_head}"></div>
+
+    <br><br>
+
+    <form class="form-horizontal" th:action="@{'/admin/user/reset/' + ${uId}}" method="post">
+        <div class="form-group">
+            <label for="input_name" class="col-sm-1 control-label">用户名</label>
+            <div class="col-sm-5" th:text="${uUsername}"></div>
+        </div>
+        <div class="form-group">
+            <label for="input_name" class="col-sm-1 control-label">邮箱</label>
+            <div class="col-sm-5" th:text="${uEmail}"></div>
+        </div>
+        <div class="form-group">
+            <label for="input_name" class="col-sm-1 control-label">密码</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" id="input_name"
+                       name="password" required="required">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-1 col-sm-10">
+                <button type="submit" class="btn btn-success">提交修改</button>
+            </div>
+        </div>
+    </form>
+
+    <span style="color:red;"></span>
+
+</div>
+</body>
+</html>

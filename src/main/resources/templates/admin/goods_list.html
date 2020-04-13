@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>商品列表</title>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" th:href="@{~/admin/css/bootstrap.css}"/>
+</head>
+<body>
+<div class="container-fluid">
+
+    <!--head-->
+    <div th:replace="~{admin/admin_head.html::admin_head}"></div>
+
+    <div class="text-right"><a class="btn btn-warning" th:href="@{/admin/good/save}">添加商品</a></div>
+
+    <br>
+
+    <div th:if="${msg}!=null" th:text="${msg}" class="alert alert-success"></div>
+    <div th:if="${failMsg}!=null" th:text="${failMsg}" class="alert alert-danger"></div>
+
+    <br>
+
+    <ul role="tablist" class="nav nav-tabs">
+        <li th:class="${url_r_type}==0?'active':''" role="presentation"><a th:href="@{/admin/good/list}">全部商品</a></li>
+        <li th:class="${url_r_type}==1?'active':''" role="presentation"><a th:href="@{/admin/good/list(url_r_type=1)}">条幅推荐</a>
+        </li>
+        <li th:class="${url_r_type}==2?'active':''" role="presentation"><a th:href="@{/admin/good/list(url_r_type=2)}">热销推荐</a>
+        </li>
+        <li th:class="${url_r_type}==3?'active':''" role="presentation"><a th:href="@{/admin/good/list(url_r_type=3)}">新品推荐</a>
+        </li>
+    </ul>
+
+    <br>
+
+    <table class="table table-bordered table-hover">
+
+        <tr>
+            <th width="5%">ID</th>
+            <th width="10%">图片</th>
+            <th width="10%">名称</th>
+            <th width="20%">介绍</th>
+            <th width="10%">价格</th>
+            <th width="10%">类目</th>
+            <th width="25%">操作</th>
+        </tr>
+
+        <tr th:if="${goodList}!=null" th:each="good:${goodList}">
+            <td><p th:text="${good.getId()}"></p></td>
+            <td>
+                <p><a th:href="@{'/good/detail/' + ${good.getId()}}" target="_blank">
+                    <img th:src="@{${good.getCover()}}" width="100px" height="100px"></a>
+                </p>
+            </td>
+            <td>
+                <p>
+                    <a th:href="@{'/good/detail/' + ${good.getId()}}" target="_blank" th:text="${good.getName()}"></a>
+                </p>
+            </td>
+            <td>
+                <p th:text="${good.getIntro()}"></p>
+            </td>
+            <td>
+                <p th:text="${good.getPrice()}"></p>
+            </td>
+            <td>
+                <p th:text="${good.getType().getName()}"></p>
+            </td>
+            <td>
+                <p>
+                    <a th:class="${good.isScroll()?'btn btn-info':'btn btn-primary'}"
+                       th:text="${good.isScroll()?'移除条幅':'添加条幅'}"
+                       th:href="@{/admin/good/recommend(url_r_type=${url_r_type},r_type=1,g_id=${good.getId()})}">
+                    </a>
+
+                    <a th:class="${good.isHot()?'btn btn-info':'btn btn-primary'}"
+                       th:text="${good.isHot()?'移除热销':'添加热销'}"
+                       th:href="@{/admin/good/recommend(url_r_type=${url_r_type},r_type=2,g_id=${good.getId()})}">
+                    </a>
+
+                    <a th:class="${good.isNew()?'btn btn-info':'btn btn-primary'}"
+                       th:text="${good.isNew()?'移除新品':'添加新品'}"
+                       th:href="@{/admin/good/recommend(url_r_type=${url_r_type},r_type=3,g_id=${good.getId()})}">
+                    </a>
+                </p>
+                <a class="btn btn-success"
+                   th:href="@{/admin/good/edit(g_id=${good.getId()},url_r_type=${url_r_type})}">修改</a>
+                <a class="btn btn-danger" th:href="@{'/admin/good/delete/'+${good.getId()}(url_r_type=${url_r_type})}">删除</a>
+            </td>
+        </tr>
+
+    </table>
+
+    <br>
+    <div style='text-align:center;'>
+        <a class='btn btn-info' disabled>首页</a>
+        <a class='btn btn-info' disabled>上一页</a>
+        <h2 style='display:inline;'>[1/18]</h2>
+        <h2 style='display:inline;'>[180]</h2>
+        <a class='btn btn-info' href='http://localhost:8080/test_cakeshop_jsp/admin/goodList.action?page=2'>下一页</a>
+        <a class='btn btn-info' href='http://localhost:8080/test_cakeshop_jsp/admin/goodList.action?page=18'>尾页</a>
+        <input type='text' class='form-control' style='display:inline;width:60px;' value=''/><a class='btn btn-info'
+                                                                                                href='javascript:void(0);'
+                                                                                                onclick='location.href="http://localhost:8080/test_cakeshop_jsp/admin/goodList.action?page="+(this.previousSibling.value)+""'>GO</a>
+    </div>
+    <br>
+</div>
+</body>
+</html>

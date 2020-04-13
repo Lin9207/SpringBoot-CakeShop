@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>商品添加</title>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" th:href="@{~/admin/css/bootstrap.css}"/>
+</head>
+<body>
+<div class="container-fluid">
+
+    <!--head-->
+    <div th:replace="~{admin/admin_head.html::admin_head}"></div>
+
+    <br>
+        <div class="alert alert-danger" th:if="${failMsg}!=null" th:text="${failMsg}"></div>
+    <br>
+
+    <form class="form-horizontal" th:action="@{/admin/good/save}" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="input_name" class="col-sm-1 control-label">名称</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" id="input_name" name="name" required="required">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="input_name" class="col-sm-1 control-label">价格</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" id="input_name" name="price">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="input_name" class="col-sm-1 control-label">介绍</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" id="input_name" name="intro">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="input_name" class="col-sm-1 control-label">库存</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" id="input_name" name="stock">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="input_file" class="col-sm-1 control-label">封面图片</label>
+            <div class="col-sm-6">
+                <input type="file" name="cover_file" id="input_file" required="required">推荐尺寸: 500 * 500
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="input_file" class="col-sm-1 control-label">详情图片1</label>
+            <div class="col-sm-6">
+                <input type="file" name="image1_file" id="input_file" required="required">推荐尺寸: 500 * 500
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="input_file" class="col-sm-1 control-label">详情图片2</label>
+            <div class="col-sm-6">
+                <input type="file" name="image2_file" id="input_file" required="required">推荐尺寸: 500 * 500
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="select_topic" class="col-sm-1 control-label">类目</label>
+            <div class="col-sm-6">
+                <select class="form-control" id="select_topic" name="type.id">
+                    <option th:each="type:${#servletContext.getAttribute('typeList')}"
+                            th:value="${type.getId()}"
+                            th:text="${type.getName()}">
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-1 col-sm-10">
+                <button type="submit" class="btn btn-success">提交保存</button>
+            </div>
+        </div>
+    </form>
+
+</div>
+</body>
+</html>

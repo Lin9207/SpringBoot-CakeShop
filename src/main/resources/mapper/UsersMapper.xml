@@ -1,0 +1,444 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cyan.mapper.UsersMapper">
+    <resultMap id="BaseResultMap" type="com.cyan.pojo.Users">
+        <!--@mbg.generated-->
+        <!--@Table users-->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+        <result column="isadmin" jdbcType="BIT" property="isadmin"/>
+        <result column="isvalidate" jdbcType="BIT" property="isvalidate"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id, username, email, `password`, `name`, phone, address, isadmin, isvalidate
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from users
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        <!--@mbg.generated-->
+        delete from users
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.cyan.pojo.Users" useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into users (username, email, `password`,
+        `name`, phone, address,
+        isadmin, isvalidate)
+        values (#{username,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+        #{name,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR},
+        #{isadmin,jdbcType=BIT}, #{isvalidate,jdbcType=BIT})
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.cyan.pojo.Users"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into users
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="username != null">
+                username,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="password != null">
+                `password`,
+            </if>
+            <if test="name != null">
+                `name`,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="isadmin != null">
+                isadmin,
+            </if>
+            <if test="isvalidate != null">
+                isvalidate,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="username != null">
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="isadmin != null">
+                #{isadmin,jdbcType=BIT},
+            </if>
+            <if test="isvalidate != null">
+                #{isvalidate,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.cyan.pojo.Users">
+        <!--@mbg.generated-->
+        update users
+        <set>
+            <if test="username != null">
+                username = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                `password` = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                `name` = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="isadmin != null">
+                isadmin = #{isadmin,jdbcType=BIT},
+            </if>
+            <if test="isvalidate != null">
+                isvalidate = #{isvalidate,jdbcType=BIT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.cyan.pojo.Users">
+        <!--@mbg.generated-->
+        update users
+        set username = #{username,jdbcType=VARCHAR},
+        email = #{email,jdbcType=VARCHAR},
+        `password` = #{password,jdbcType=VARCHAR},
+        `name` = #{name,jdbcType=VARCHAR},
+        phone = #{phone,jdbcType=VARCHAR},
+        address = #{address,jdbcType=VARCHAR},
+        isadmin = #{isadmin,jdbcType=BIT},
+        isvalidate = #{isvalidate,jdbcType=BIT}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateBatch" parameterType="java.util.List">
+        <!--@mbg.generated-->
+        update users
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="username = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id,jdbcType=INTEGER} then #{item.username,jdbcType=VARCHAR}
+                </foreach>
+            </trim>
+            <trim prefix="email = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id,jdbcType=INTEGER} then #{item.email,jdbcType=VARCHAR}
+                </foreach>
+            </trim>
+            <trim prefix="`password` = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id,jdbcType=INTEGER} then #{item.password,jdbcType=VARCHAR}
+                </foreach>
+            </trim>
+            <trim prefix="`name` = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id,jdbcType=INTEGER} then #{item.name,jdbcType=VARCHAR}
+                </foreach>
+            </trim>
+            <trim prefix="phone = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id,jdbcType=INTEGER} then #{item.phone,jdbcType=VARCHAR}
+                </foreach>
+            </trim>
+            <trim prefix="address = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id,jdbcType=INTEGER} then #{item.address,jdbcType=VARCHAR}
+                </foreach>
+            </trim>
+            <trim prefix="isadmin = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id,jdbcType=INTEGER} then #{item.isadmin,jdbcType=BIT}
+                </foreach>
+            </trim>
+            <trim prefix="isvalidate = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id,jdbcType=INTEGER} then #{item.isvalidate,jdbcType=BIT}
+                </foreach>
+            </trim>
+        </trim>
+        where id in
+        <foreach close=")" collection="list" item="item" open="(" separator=", ">
+            #{item.id,jdbcType=INTEGER}
+        </foreach>
+    </update>
+    <update id="updateBatchSelective" parameterType="java.util.List">
+        <!--@mbg.generated-->
+        update users
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="username = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.username != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.username,jdbcType=VARCHAR}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="email = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.email != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.email,jdbcType=VARCHAR}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="`password` = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.password != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.password,jdbcType=VARCHAR}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="`name` = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.name != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.name,jdbcType=VARCHAR}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="phone = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.phone != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.phone,jdbcType=VARCHAR}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="address = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.address != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.address,jdbcType=VARCHAR}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="isadmin = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.isadmin != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.isadmin,jdbcType=BIT}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="isvalidate = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.isvalidate != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.isvalidate,jdbcType=BIT}
+                    </if>
+                </foreach>
+            </trim>
+        </trim>
+        where id in
+        <foreach close=")" collection="list" item="item" open="(" separator=", ">
+            #{item.id,jdbcType=INTEGER}
+        </foreach>
+    </update>
+    <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into users
+        (username, email, `password`, `name`, phone, address, isadmin, isvalidate)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.username,jdbcType=VARCHAR}, #{item.email,jdbcType=VARCHAR}, #{item.password,jdbcType=VARCHAR},
+            #{item.name,jdbcType=VARCHAR}, #{item.phone,jdbcType=VARCHAR}, #{item.address,jdbcType=VARCHAR},
+            #{item.isadmin,jdbcType=BIT}, #{item.isvalidate,jdbcType=BIT})
+        </foreach>
+    </insert>
+    <insert id="insertOrUpdate" keyColumn="id" keyProperty="id" parameterType="com.cyan.pojo.Users"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into users
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            username,
+            email,
+            `password`,
+            `name`,
+            phone,
+            address,
+            isadmin,
+            isvalidate,
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            #{username,jdbcType=VARCHAR},
+            #{email,jdbcType=VARCHAR},
+            #{password,jdbcType=VARCHAR},
+            #{name,jdbcType=VARCHAR},
+            #{phone,jdbcType=VARCHAR},
+            #{address,jdbcType=VARCHAR},
+            #{isadmin,jdbcType=BIT},
+            #{isvalidate,jdbcType=BIT},
+        </trim>
+        on duplicate key update
+        <trim suffixOverrides=",">
+            <if test="id != null">
+                id = #{id,jdbcType=INTEGER},
+            </if>
+            username = #{username,jdbcType=VARCHAR},
+            email = #{email,jdbcType=VARCHAR},
+            `password` = #{password,jdbcType=VARCHAR},
+            `name` = #{name,jdbcType=VARCHAR},
+            phone = #{phone,jdbcType=VARCHAR},
+            address = #{address,jdbcType=VARCHAR},
+            isadmin = #{isadmin,jdbcType=BIT},
+            isvalidate = #{isvalidate,jdbcType=BIT},
+        </trim>
+    </insert>
+    <insert id="insertOrUpdateSelective" keyColumn="id" keyProperty="id" parameterType="com.cyan.pojo.Users"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into users
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="username != null">
+                username,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="password != null">
+                `password`,
+            </if>
+            <if test="name != null">
+                `name`,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="isadmin != null">
+                isadmin,
+            </if>
+            <if test="isvalidate != null">
+                isvalidate,
+            </if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="username != null">
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="isadmin != null">
+                #{isadmin,jdbcType=BIT},
+            </if>
+            <if test="isvalidate != null">
+                #{isvalidate,jdbcType=BIT},
+            </if>
+        </trim>
+        on duplicate key update
+        <trim suffixOverrides=",">
+            <if test="id != null">
+                id = #{id,jdbcType=INTEGER},
+            </if>
+            <if test="username != null">
+                username = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                `password` = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                `name` = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="isadmin != null">
+                isadmin = #{isadmin,jdbcType=BIT},
+            </if>
+            <if test="isvalidate != null">
+                isvalidate = #{isvalidate,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+
+    <!--登录验证-用户名-->
+    <select id="selectByUsernamePassword" resultMap="BaseResultMap">
+        SELECT *
+        FROM users
+        WHERE username = #{username} AND password = #{password}
+    </select>
+
+    <!--登录验证-邮箱-->
+    <select id="selectByEmailPassword" resultMap="BaseResultMap">
+        SELECT *
+        FROM users
+        WHERE email = #{email} AND password = #{password}
+    </select>
+
+    <!--根据用户名查询用户是否存在-->
+    <select id="selectByUsername" parameterType="String" resultType="Users">
+        SELECT *
+        FROM users
+        WHERE username = #{username}
+    </select>
+
+    <!--根据邮箱查询用户是否存在-->
+    <select id="selectByEmail" parameterType="String" resultType="Users">
+        SELECT *
+        FROM users
+        WHERE email = #{email}
+    </select>
+
+    <!--查询所有用户-->
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT * FROM users
+    </select>
+
+</mapper>

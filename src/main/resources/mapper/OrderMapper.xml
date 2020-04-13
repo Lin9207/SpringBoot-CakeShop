@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cyan.mapper.OrderMapper">
+    <resultMap id="BaseResultMap" type="com.cyan.pojo.Order">
+        <!--@mbg.generated-->
+        <!--@Table order-->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="total" jdbcType="FLOAT" property="total"/>
+        <result column="amount" jdbcType="INTEGER" property="amount"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="paytype" jdbcType="INTEGER" property="paytype"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+        <result column="datetime" jdbcType="DATE" property="datetime"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id, total, amount, `status`, paytype, `name`, phone, address, `datetime`, user_id
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from `order`
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        <!--@mbg.generated-->
+        DELETE FROM `order`
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.cyan.pojo.Order" useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into `order` (total, amount, `status`,
+        paytype, `name`, phone,
+        address, `datetime`, user_id
+        )
+        values (#{total,jdbcType=FLOAT}, #{amount,jdbcType=INTEGER}, #{status,jdbcType=INTEGER},
+        #{paytype,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
+        #{address,jdbcType=VARCHAR}, #{datetime,jdbcType=DATE}, #{userId,jdbcType=INTEGER}
+        )
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.cyan.pojo.Order"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into `order`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="total != null">
+                total,
+            </if>
+            <if test="amount != null">
+                amount,
+            </if>
+            <if test="status != null">
+                `status`,
+            </if>
+            <if test="paytype != null">
+                paytype,
+            </if>
+            <if test="name != null">
+                `name`,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="datetime != null">
+                `datetime`,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="total != null">
+                #{total,jdbcType=FLOAT},
+            </if>
+            <if test="amount != null">
+                #{amount,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="paytype != null">
+                #{paytype,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="datetime != null">
+                #{datetime,jdbcType=DATE},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.cyan.pojo.Order">
+        <!--@mbg.generated-->
+        update `order`
+        <set>
+            <if test="total != null">
+                total = #{total,jdbcType=FLOAT},
+            </if>
+            <if test="amount != null">
+                amount = #{amount,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                `status` = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="paytype != null">
+                paytype = #{paytype,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                `name` = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="datetime != null">
+                `datetime` = #{datetime,jdbcType=DATE},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.cyan.pojo.Order">
+        <!--@mbg.generated-->
+        update `order`
+        set total = #{total,jdbcType=FLOAT},
+        amount = #{amount,jdbcType=INTEGER},
+        `status` = #{status,jdbcType=INTEGER},
+        paytype = #{paytype,jdbcType=INTEGER},
+        `name` = #{name,jdbcType=VARCHAR},
+        phone = #{phone,jdbcType=VARCHAR},
+        address = #{address,jdbcType=VARCHAR},
+        `datetime` = #{datetime,jdbcType=DATE},
+        user_id = #{userId,jdbcType=INTEGER}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateBatch" parameterType="java.util.List">
+        <!--@mbg.generated-->
+        update `order`
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="total = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id,jdbcType=INTEGER} then #{item.total,jdbcType=FLOAT}
+                </foreach>
+            </trim>
+            <trim prefix="amount = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id,jdbcType=INTEGER} then #{item.amount,jdbcType=INTEGER}
+                </foreach>
+            </trim>
+            <trim prefix="`status` = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id,jdbcType=INTEGER} then #{item.status,jdbcType=INTEGER}
+                </foreach>
+            </trim>
+            <trim prefix="paytype = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id,jdbcType=INTEGER} then #{item.paytype,jdbcType=INTEGER}
+                </foreach>
+            </trim>
+            <trim prefix="`name` = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id,jdbcType=INTEGER} then #{item.name,jdbcType=VARCHAR}
+                </foreach>
+            </trim>
+            <trim prefix="phone = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id,jdbcType=INTEGER} then #{item.phone,jdbcType=VARCHAR}
+                </foreach>
+            </trim>
+            <trim prefix="address = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id,jdbcType=INTEGER} then #{item.address,jdbcType=VARCHAR}
+                </foreach>
+            </trim>
+            <trim prefix="`datetime` = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id,jdbcType=INTEGER} then #{item.datetime,jdbcType=DATE}
+                </foreach>
+            </trim>
+            <trim prefix="user_id = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id,jdbcType=INTEGER} then #{item.userId,jdbcType=INTEGER}
+                </foreach>
+            </trim>
+        </trim>
+        where id in
+        <foreach close=")" collection="list" item="item" open="(" separator=", ">
+            #{item.id,jdbcType=INTEGER}
+        </foreach>
+    </update>
+    <update id="updateBatchSelective" parameterType="java.util.List">
+        <!--@mbg.generated-->
+        update `order`
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="total = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.total != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.total,jdbcType=FLOAT}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="amount = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.amount != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.amount,jdbcType=INTEGER}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="`status` = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.status != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.status,jdbcType=INTEGER}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="paytype = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.paytype != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.paytype,jdbcType=INTEGER}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="`name` = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.name != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.name,jdbcType=VARCHAR}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="phone = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.phone != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.phone,jdbcType=VARCHAR}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="address = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.address != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.address,jdbcType=VARCHAR}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="`datetime` = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.datetime != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.datetime,jdbcType=DATE}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="user_id = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.userId != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.userId,jdbcType=INTEGER}
+                    </if>
+                </foreach>
+            </trim>
+        </trim>
+        where id in
+        <foreach close=")" collection="list" item="item" open="(" separator=", ">
+            #{item.id,jdbcType=INTEGER}
+        </foreach>
+    </update>
+    <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into `order`
+        (total, amount, `status`, paytype, `name`, phone, address, `datetime`, user_id)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.total,jdbcType=FLOAT}, #{item.amount,jdbcType=INTEGER}, #{item.status,jdbcType=INTEGER},
+            #{item.paytype,jdbcType=INTEGER}, #{item.name,jdbcType=VARCHAR}, #{item.phone,jdbcType=VARCHAR},
+            #{item.address,jdbcType=VARCHAR}, #{item.datetime,jdbcType=DATE}, #{item.userId,jdbcType=INTEGER}
+            )
+        </foreach>
+    </insert>
+    <insert id="insertOrUpdate" keyColumn="id" keyProperty="id" parameterType="com.cyan.pojo.Order"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into `order`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            total,
+            amount,
+            `status`,
+            paytype,
+            `name`,
+            phone,
+            address,
+            `datetime`,
+            user_id,
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            #{total,jdbcType=FLOAT},
+            #{amount,jdbcType=INTEGER},
+            #{status,jdbcType=INTEGER},
+            #{paytype,jdbcType=INTEGER},
+            #{name,jdbcType=VARCHAR},
+            #{phone,jdbcType=VARCHAR},
+            #{address,jdbcType=VARCHAR},
+            #{datetime,jdbcType=DATE},
+            #{userId,jdbcType=INTEGER},
+        </trim>
+        on duplicate key update
+        <trim suffixOverrides=",">
+            <if test="id != null">
+                id = #{id,jdbcType=INTEGER},
+            </if>
+            total = #{total,jdbcType=FLOAT},
+            amount = #{amount,jdbcType=INTEGER},
+            `status` = #{status,jdbcType=INTEGER},
+            paytype = #{paytype,jdbcType=INTEGER},
+            `name` = #{name,jdbcType=VARCHAR},
+            phone = #{phone,jdbcType=VARCHAR},
+            address = #{address,jdbcType=VARCHAR},
+            `datetime` = #{datetime,jdbcType=DATE},
+            user_id = #{userId,jdbcType=INTEGER},
+        </trim>
+    </insert>
+    <insert id="insertOrUpdateSelective" keyColumn="id" keyProperty="id" parameterType="com.cyan.pojo.Order"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into `order`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="total != null">
+                total,
+            </if>
+            <if test="amount != null">
+                amount,
+            </if>
+            <if test="status != null">
+                `status`,
+            </if>
+            <if test="paytype != null">
+                paytype,
+            </if>
+            <if test="name != null">
+                `name`,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="datetime != null">
+                `datetime`,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="total != null">
+                #{total,jdbcType=FLOAT},
+            </if>
+            <if test="amount != null">
+                #{amount,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="paytype != null">
+                #{paytype,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="datetime != null">
+                #{datetime,jdbcType=DATE},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+        </trim>
+        on duplicate key update
+        <trim suffixOverrides=",">
+            <if test="id != null">
+                id = #{id,jdbcType=INTEGER},
+            </if>
+            <if test="total != null">
+                total = #{total,jdbcType=FLOAT},
+            </if>
+            <if test="amount != null">
+                amount = #{amount,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                `status` = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="paytype != null">
+                paytype = #{paytype,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                `name` = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="datetime != null">
+                `datetime` = #{datetime,jdbcType=DATE},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <!--/*获取最后插入表数据的ID*/-->
+    <select id="getLastInsertId" resultType="int">
+        SELECT last_insert_id()
+    </select>
+
+    <!--根据用户ID查询订单-->
+    <select id="selectAllByUserId" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM `order`
+        WHERE user_id = #{id}
+        ORDER BY datetime DESC
+    </select>
+
+    <!--根据Status状态查询订单 [0-所有 1-未付款 2-已付款 3-配送中 4-已完成]-->
+    <select id="selectAllByStatus" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM `order`
+        <if test="status != null and status != 0">
+            WHERE status = #{status}
+        </if>
+        ORDER BY datetime DESC
+    </select>
+
+    <!--修改订单状态-->
+    <delete id="updateStatusById">
+        UPDATE `order`
+        SET status = #{status}
+        WHERE id = #{id}
+    </delete>
+
+</mapper>

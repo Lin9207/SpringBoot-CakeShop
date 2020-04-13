@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>类目列表</title>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" th:href="@{~/admin/css/bootstrap.css}"/>
+</head>
+<body>
+<div class="container-fluid">
+
+    <!--head-->
+    <div th:replace="~{admin/admin_head.html::admin_head}"></div>
+
+    <br>
+    <div>
+        <form class="form-inline" method="post" th:action="@{/admin/type/save}">
+            <input type="text" class="form-control" id="input_name" name="name" placeholder="输入类目名称"
+                   required="required" style="width: 500px">
+            <input type="submit" class="btn btn-warning" value="添加类目"/>
+        </form>
+    </div>
+
+    <br>
+
+    <div class="alert alert-success" th:if="${msg}!=null" th:text="${msg}"></div>
+    <div class="alert alert-danger" th:if="${failMsg}!=null" th:text="${failMsg}"></div>
+
+    <table class="table table-bordered table-hover">
+
+        <tr>
+            <th width="5%">ID</th>
+            <th width="10%">名称</th>
+            <th width="10%">操作</th>
+        </tr>
+
+        <tr th:if="${typeList!=null}" th:each="type:${typeList}">
+            <td><p th:text="${type.getId()}"></p></td>
+            <td><p th:text="${type.getName()}"></p></td>
+            <td>
+                <a class="btn btn-primary" th:href="@{'/admin/type/edit/' + ${type.getId()}}">修改</a>
+                <a class="btn btn-danger" th:href="@{'/admin/type/delete/' + ${type.getId()}}">删除</a>
+            </td>
+        </tr>
+
+    </table>
+
+</div>
+</body>
+</html>

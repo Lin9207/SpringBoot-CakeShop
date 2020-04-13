@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>购物车</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link type="text/css" rel="stylesheet" th:href="@{~/css/bootstrap.css}">
+    <link type="text/css" rel="stylesheet" th:href="@{~/css/style.css}">
+    <script type="text/javascript" th:src="@{~/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{~/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{~/layer/layer.js}"></script>
+    <script type="text/javascript" th:src="@{~/js/cart.js}"></script>
+</head>
+<body>
+<!--header-->
+<div th:replace="~{commons/commons.html::header(activeType='good_cart.html')}"></div>
+<!--//header-->
+
+<!--cart-items-->
+<div class="cart-items">
+    <div class="container">
+        <h2>我的购物车</h2>
+
+        <div th:if="${session.userOrder}!=null">
+            <div class="cart-header col-md-6" th:each="order:${session.userOrder.getItemMap()}">
+                <div class="cart-sec simpleCart_shelfItem">
+                    <div class="cart-item cyc">
+                        <a th:href="@{'/good/detail/'+${order.getValue().getGoods().getId()}}">
+                            <img th:src="@{${order.getValue().getGoods().getCover()}}" class="img-responsive">
+                        </a>
+                    </div>
+                    <div class="cart-item-info">
+                        <h3>
+                            <a th:href="@{'/good/detail/'+${order.getValue().getGoods().getId()}}"
+                               th:text="${order.getValue().getGoods().getName()}"></a>
+                        </h3>
+                        <h3><span th:text="'单价: ¥ ' + ${order.getValue().getPrice()}"></span></h3>
+                        <h3><span th:text="'数量: ' + ${order.getValue().getAmount()}"></span></h3>
+                        <a class="btn btn-info" th:href="'javascript:buy('+${order.getValue().getGoods().getId()}+');'">增加</a>
+                        <a class="btn btn-warning"
+                           th:href="'javascript:lessen('+${order.getValue().getGoods().getId()}+');'">减少</a>
+                        <a class="btn btn-danger"
+                           th:href="'javascript:deletes('+${order.getValue().getGoods().getId()}+');'">删除</a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+
+            <div class="cart-header col-md-12">
+                <hr>
+                <h3 th:text="'订单总金额: ¥ '+${session.userOrder!=null?session.userOrder.getTotal():'0.0'}"></h3>
+                <a class="btn btn-success btn-lg" style="margin-left:74%" th:href="@{/order/pay}">提交订单</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!--//cart-items-->
+
+<!--footer-->
+<div th:replace="~{/commons/commons.html::footer}"></div>
+<!--//footer-->
+
+</body>
+</html>

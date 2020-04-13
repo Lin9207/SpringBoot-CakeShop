@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>支付成功</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link type="text/css" rel="stylesheet" th:href="@{~/css/bootstrap.css}">
+    <link type="text/css" rel="stylesheet" th:href="@{~/css/style.css}">
+    <script type="text/javascript" th:src="@{~/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{~/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{~/layer/layer.js}"></script>
+    <script type="text/javascript" th:src="@{~/js/cart.js}"></script>
+</head>
+<body>
+
+<!--header-->
+<div th:replace="~{commons/commons.html::header}"></div>
+<!--//header-->
+
+<!--cart-items-->
+<div class="cart-items">
+    <div class="container">
+
+        <div th:if="${msg!=null}">
+            <div class="alert alert-success" th:text="${msg}"></div>
+        </div>
+        
+        <p><a class="btn btn-success" th:href="@{/order/myOrder}">查看我的订单</a></p>
+    </div>
+</div>
+<!--//cart-items-->
+
+<!--footer-->
+<div th:replace="~{commons/commons.html::footer}"></div>
+<!--//footer-->
+
+</body>
+</html>

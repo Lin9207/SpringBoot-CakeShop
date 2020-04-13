@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>个人中心</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link type="text/css" rel="stylesheet" th:href="@{~/css/bootstrap.css}">
+    <link type="text/css" rel="stylesheet" th:href="@{~/css/style.css}">
+    <script type="text/javascript" th:src="@{~/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{~/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{~/js/simpleCart.min.js}"></script>
+</head>
+<body>
+
+<!--header-->
+<div th:replace="~{commons/commons.html::header(activeType='my_center.html')}"></div>
+<!--//header-->
+
+<!--account-->
+<div class="account">
+    <div class="container">
+        <div class="register">
+
+            <div class="alert alert-success" th:if="${msg!=null}" th:text="${msg}"></div>
+            <div class="alert alert-danger" th:if="${failMsg!=null}" th:text="${failMsg}"></div>
+
+            <div class="register-top-grid">
+                <h3>个人中心</h3>
+                <!-- 收货信息 -->
+                <form th:action="@{/user/changeaddress}" method="post">
+                    <h4>收货信息</h4>
+                    <div class="input">
+                        <span>收货人<label></label></span>
+                        <input type="text" name="name" th:value="${#httpSession.getAttribute('loginUser').getName()}"
+                               placeholder="请输入收货人">
+                    </div>
+                    <div class="input">
+                        <span>收货电话</span>
+                        <input type="text" name="phone" th:value="${#httpSession.getAttribute('loginUser').getPhone()}"
+                               placeholder="请输入收货电话">
+                    </div>
+                    <div class="input">
+                        <span>收货地址</span>
+                        <input type="text" name="address"
+                               th:value="${#httpSession.getAttribute('loginUser').getAddress()}" placeholder="请输入收货地址">
+                    </div>
+                    <div class="register-but text-center">
+                        <input type="submit" value="修改">
+                    </div>
+                </form>
+                <!-- //收货信息 -->
+                <hr>
+                <!-- 安全信息 -->
+                <form th:action="@{/user/changepassword}" method="post">
+                    <h4>安全信息</h4>
+                    <div class="input">
+                        <span>原密码</span>
+                        <input type="text" name="password" placeholder="请输入原密码">
+                    </div>
+                    <div class="input">
+                        <span>新密码</span>
+                        <input type="text" name="passwordNew" placeholder="请输入新密码">
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="register-but text-center">
+                        <input type="submit" value="修改">
+                    </div>
+                </form>
+                <!-- //安全信息 -->
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+<!--//account-->
+
+<!--   footer -->
+<div th:replace="~{commons/commons.html::footer}"></div>
+<!-- //footer -->
+
+</body>
+</html>
