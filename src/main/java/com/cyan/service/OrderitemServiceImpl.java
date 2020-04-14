@@ -78,4 +78,10 @@ public class OrderitemServiceImpl implements OrderitemService{
     public int deleteByOrderId(Integer id) {
         return orderitemMapper.deleteByOrderId(id);
     }
+
+    /*根据商品ID查询订单项*/
+    @Override
+    public List<Orderitem> selectByGoodId(Integer id) {
+        return orderitemMapper.selectByGoodId(id);
+    }
 }

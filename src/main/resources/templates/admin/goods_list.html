@@ -44,7 +44,7 @@
             <th width="25%">操作</th>
         </tr>
 
-        <tr th:if="${goodList}!=null" th:each="good:${goodList}">
+        <tr th:if="${pageInfo.getList()}!=null" th:each="good:${pageInfo.getList()}">
             <td><p th:text="${good.getId()}"></p></td>
             <td>
                 <p><a th:href="@{'/good/detail/' + ${good.getId()}}" target="_blank">
@@ -90,19 +90,35 @@
 
     </table>
 
-    <br>
-    <div style='text-align:center;'>
-        <a class='btn btn-info' disabled>首页</a>
-        <a class='btn btn-info' disabled>上一页</a>
-        <h2 style='display:inline;'>[1/18]</h2>
-        <h2 style='display:inline;'>[180]</h2>
-        <a class='btn btn-info' href='http://localhost:8080/test_cakeshop_jsp/admin/goodList.action?page=2'>下一页</a>
-        <a class='btn btn-info' href='http://localhost:8080/test_cakeshop_jsp/admin/goodList.action?page=18'>尾页</a>
-        <input type='text' class='form-control' style='display:inline;width:60px;' value=''/><a class='btn btn-info'
-                                                                                                href='javascript:void(0);'
-                                                                                                onclick='location.href="http://localhost:8080/test_cakeshop_jsp/admin/goodList.action?page="+(this.previousSibling.value)+""'>GO</a>
+    <!--分页-->
+    <div>
+        <div style='text-align:center;'>
+            <a th:class="${pageInfo.isIsFirstPage()?'btn btn-info disabled':'btn btn-info'}"
+               th:href="@{/admin/good/list(url_r_type=${url_r_type},pageNum=1)}"
+               th:text="${'首页'}">
+            </a>
+            <a th:class="${pageInfo.isIsFirstPage()?'btn btn-info disabled':'btn btn-info'}"
+               th:href="@{/admin/good/list(url_r_type=${url_r_type},pageNum=${pageInfo.getPageNum()-1})}"
+               th:text="${'上一页'}">
+            </a>
+
+            <h2 style='display:inline;'
+                th:text="'['+${pageInfo.getPageNum()}+'/'+${pageInfo.getPages()}+']'"></h2>
+            <h2 style='display:inline;'
+                th:text="'['+${pageInfo.getTotal()}+']'"></h2>
+
+            <a th:class="${pageInfo.isIsLastPage()?'btn btn-info disabled':'btn btn-info'}"
+               th:href="@{/admin/good/list(url_r_type=${url_r_type},pageNum=${pageInfo.getPageNum()+1})}"
+               th:text="${'下一页'}">
+            </a>
+            <a th:class="${pageInfo.isIsLastPage()?'btn btn-info disabled':'btn btn-info'}"
+               th:href="@{/admin/good/list(url_r_type=${url_r_type},pageNum=${pageInfo.getPages()})}"
+               th:text="${'尾页'}">
+            </a>
+        </div>
     </div>
-    <br>
+    <!--//分页-->
+
 </div>
 </body>
 </html>

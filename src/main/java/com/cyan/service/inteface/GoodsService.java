@@ -1,8 +1,8 @@
 package com.cyan.service.inteface;
 
 import com.cyan.pojo.Goods;
+import com.github.pagehelper.PageInfo;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public interface GoodsService {
@@ -57,14 +57,14 @@ public interface GoodsService {
     /*获取新品商品*/
     List<Goods> getNewGoodsList();
 
-    /*根据字段name模糊搜索查询*/
-    List<Goods> getSearchGoods(String searchName);
+    /*分页,根据字段name模糊搜索查询*/
+    PageInfo<Goods> getSearchGoods(String searchName, Integer pageNum,Integer pageSize);
 
-    /*根据类目ID查询商品*/
-    List<Goods> selectByTypeId(Integer typeId);
+    /*分页,根据类目ID查询商品*/
+    PageInfo<Goods> selectByTypeId(Integer typeId, Integer pageNum,Integer pageSize);
 
-    /*根据Recommend推荐表查询 - type(0-所有 1-条幅/2-热销/3-新品)*/
-    List<Goods> selectByRecommendType(Integer type);
+    /*分页,根据Recommend推荐表查询 - type(0-所有 1-条幅/2-热销/3-新品)*/
+    PageInfo<Goods> selectByRecommendType(Integer type, Integer pageNum,Integer pageSize);
 
     // 判断是都为条幅商品
     boolean isScroll(Integer goodId);

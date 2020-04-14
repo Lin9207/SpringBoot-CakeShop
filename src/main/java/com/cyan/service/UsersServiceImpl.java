@@ -1,14 +1,15 @@
 package com.cyan.service;
 
+import com.cyan.mapper.UsersMapper;
+import com.cyan.pojo.Users;
+import com.cyan.service.inteface.UsersService;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.sql.SQLException;
 import java.util.List;
-
-import com.cyan.pojo.Users;
-import com.cyan.mapper.UsersMapper;
-import com.cyan.service.inteface.UsersService;
 
 @Service
 public class UsersServiceImpl implements UsersService {
@@ -106,7 +107,12 @@ public class UsersServiceImpl implements UsersService {
 
     /*查询所有用户*/
     @Override
-    public List<Users> selectAll() {
-        return usersMapper.selectAll();
+    public PageInfo<Users> selectAll(Integer pageNum,Integer pageSIze) {
+        /*设置分页*/
+        Page<Users> page = PageHelper.startPage(pageNum,pageSIze,true);
+        /*查询*/
+        List<Users> list = usersMapper.selectAll();
+        /*将分页模型返回*/
+        return new PageInfo<>(list);
     }
 }

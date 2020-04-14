@@ -47,4 +47,7 @@ public interface OrderitemMapper {
 
     /*根据订单ID删除订单项*/
     int deleteByOrderId(Integer id);
+
+    /*根据商品ID查询订单项*/
+    List<Orderitem>  selectByGoodId(Integer id);
 }

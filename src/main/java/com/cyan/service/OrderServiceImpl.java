@@ -5,6 +5,9 @@ import com.cyan.mapper.OrderitemMapper;
 import com.cyan.pojo.Order;
 import com.cyan.pojo.Orderitem;
 import com.cyan.service.inteface.OrderService;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -111,8 +114,9 @@ public class OrderServiceImpl implements OrderService {
 
     /*根据Status状态查询订单 [0-所有 1-未付款 2-已付款 3-配送中 4-已完成]*/
     @Override
-    public List<Order> selectAllByStatus(Integer status) {
-
+    public PageInfo<Order> selectAllByStatus(Integer status,Integer pageNum,Integer pageSize) {
+        /*设置分页*/
+        Page<?> page = PageHelper.startPage(pageNum,pageSize,true);
         /*查询订单*/
         List<Order> orderList = orderMapper.selectAllByStatus(status);
         /*遍历订单-添加订单项*/
@@ -121,7 +125,7 @@ public class OrderServiceImpl implements OrderService {
             List<Orderitem> orderitemList = orderitemMapper.selectAllByOrderId(order.getId());
             order.setItemList(orderitemList);
         }
-        return orderList;
+        return new PageInfo<Order>(orderList);
     }
 
     /*修改订单状态*/

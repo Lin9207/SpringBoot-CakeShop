@@ -29,7 +29,7 @@
 
         <div class="col-md-12 product-model-sec">
 
-            <div class="product-grid" th:each="good:${list}">
+            <div class="product-grid" th:each="good:${pageInfo.getList()}">
                 <a th:href="@{'/good/detail/'+${good.getId()}}">
                     <div class="more-product"><span> </span></div>
                     <div class="product-img b-link-stripe b-animate-go  thickbox">
@@ -53,19 +53,37 @@
 
             <div class="clearfix"></div>
         </div>
+
+
+        <!--分页-->
         <div>
             <div style='text-align:center;'>
-                <a class='btn btn-info' disabled>首页</a>
-                <a class='btn btn-info' disabled>上一页</a>
-                <h2 style='display:inline;'>[1/1]</h2>
-                <h2 style='display:inline;'>[6]</h2>
-                <a class='btn btn-info' disabled>下一页</a>
-                <a class='btn btn-info' disabled>尾页</a>
-                <input type='text' class='form-control' style='display:inline;width:60px;' value=''/><a
-                    class='btn btn-info' href='javascript:void(0);'
-                    onclick='location.href="http://localhost:8080/test_cakeshop_jsp/index/goods.action?page="+(this.previousSibling.value)+"&typeid=5"'>GO</a>
+                <a th:class="${pageInfo.isIsFirstPage()?'btn btn-info disabled':'btn btn-info'}"
+                   th:href="@{/good/recommend(type=${type},pageNum=1)}"
+                   th:text="${'首页'}">
+                </a>
+                <a th:class="${pageInfo.isIsFirstPage()?'btn btn-info disabled':'btn btn-info'}"
+                   th:href="@{/good/recommend(type=${type},pageNum=${pageInfo.getPageNum()-1})}"
+                   th:text="${'上一页'}">
+                </a>
+
+                <h2 style='display:inline;'
+                    th:text="'['+${pageInfo.getPageNum()}+'/'+${pageInfo.getPages()}+']'"></h2>
+                <h2 style='display:inline;'
+                    th:text="'['+${pageInfo.getTotal()}+']'"></h2>
+
+                <a th:class="${pageInfo.isIsLastPage()?'btn btn-info disabled':'btn btn-info'}"
+                   th:href="@{/good/recommend(type=${type},pageNum=${pageInfo.getPageNum()+1})}"
+                   th:text="${'下一页'}">
+                </a>
+                <a th:class="${pageInfo.isIsLastPage()?'btn btn-info disabled':'btn btn-info'}"
+                   th:href="@{/good/recommend(type=${type},pageNum=${pageInfo.getPages()})}"
+                   th:text="${'尾页'}">
+                </a>
             </div>
         </div>
+        <!--//分页-->
+
     </div>
 </div>
 <!--//products-->

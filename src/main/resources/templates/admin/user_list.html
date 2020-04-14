@@ -33,7 +33,7 @@
             <th width="12%">操作</th>
         </tr>
 
-    <div th:if="${userList}!=null" th:each="user:${userList}">
+    <div th:if="${pageInfo.getList()}!=null" th:each="user:${pageInfo.getList()}">
         <tr th:if="!${user.getIsadmin()}">
             <td>
                 <p th:text="${user.getId()}"></p>
@@ -65,17 +65,34 @@
     </table>
 
     <br>
-    <div style='text-align:center;'>
-        <a class='btn btn-info' disabled>首页</a>
-        <a class='btn btn-info' disabled>上一页</a>
-        <h2 style='display:inline;'>[1/1]</h2>
-        <h2 style='display:inline;'>[2]</h2>
-        <a class='btn btn-info' disabled>下一页</a>
-        <a class='btn btn-info' disabled>尾页</a>
-        <input type='text' class='form-control' style='display:inline;width:60px;' value=''/><a class='btn btn-info'
-                                                                                                href='javascript:void(0);'
-                                                                                                onclick='location.href="http://localhost:8080/test_cakeshop_jsp/admin/userList.action?page="+(this.previousSibling.value)+""'>GO</a>
+    <!--分页-->
+    <div>
+        <div style='text-align:center;'>
+            <a th:class="${pageInfo.isIsFirstPage()?'btn btn-info disabled':'btn btn-info'}"
+               th:href="@{/admin/user/list(pageNum=1)}"
+               th:text="${'首页'}">
+            </a>
+            <a th:class="${pageInfo.isIsFirstPage()?'btn btn-info disabled':'btn btn-info'}"
+               th:href="@{/admin/user/list(pageNum=${pageInfo.getPageNum()-1})}"
+               th:text="${'上一页'}">
+            </a>
+
+            <h2 style='display:inline;'
+                th:text="'['+${pageInfo.getPageNum()}+'/'+${pageInfo.getPages()}+']'"></h2>
+            <h2 style='display:inline;'
+                th:text="'['+${pageInfo.getTotal()}+']'"></h2>
+
+            <a th:class="${pageInfo.isIsLastPage()?'btn btn-info disabled':'btn btn-info'}"
+               th:href="@{/admin/user/list(pageNum=${pageInfo.getPageNum()+1})}"
+               th:text="${'下一页'}">
+            </a>
+            <a th:class="${pageInfo.isIsLastPage()?'btn btn-info disabled':'btn btn-info'}"
+               th:href="@{/admin/user/list(pageNum=${pageInfo.getPages()})}"
+               th:text="${'尾页'}">
+            </a>
+        </div>
     </div>
+    <!--//分页-->
     <br>
 </div>
 </body>

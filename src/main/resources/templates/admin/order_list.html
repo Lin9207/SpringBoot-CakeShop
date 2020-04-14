@@ -13,19 +13,19 @@
     <br>
     <ul role="tablist" class="nav nav-tabs">
         <li th:class="${status==0?'active':''}" role="presentation">
-            <a th:href="@{/admin/order/list}">全部订单</a>
+            <a th:href="@{/admin/order/list(pageNum=${pageInfo.getPageNum()})}">全部订单</a>
         </li>
         <li th:class="${status==1?'active':''}" role="presentation">
-            <a th:href="@{/admin/order/list(status=1)}">未付款</a>
+            <a th:href="@{/admin/order/list(status=1,pageNum=${pageInfo.getPageNum()})}">未付款</a>
         </li>
         <li th:class="${status==2?'active':''}" role="presentation">
-            <a th:href="@{/admin/order/list(status=2)}">已付款</a>
+            <a th:href="@{/admin/order/list(status=2,pageNum=${pageInfo.getPageNum()})}">已付款</a>
         </li>
         <li th:class="${status==3?'active':''}" role="presentation">
-            <a th:href="@{/admin/order/list(status=3)}">配送中</a>
+            <a th:href="@{/admin/order/list(status=3,pageNum=${pageInfo.getPageNum()})}">配送中</a>
         </li>
         <li th:class="${status==4?'active':''}" role="presentation">
-            <a th:href="@{/admin/order/list(status=4)}">已完成</a>
+            <a th:href="@{/admin/order/list(status=4,pageNum=${pageInfo.getPageNum()})}">已完成</a>
         </li>
     </ul>
 
@@ -45,7 +45,7 @@
             <th width="10%">操作</th>
         </tr>
 
-        <tr th:if="${orderList}!=null" th:each="order:${orderList}">
+        <tr th:if="${pageInfo.getList()}!=null" th:each="order:${pageInfo.getList()}">
 
             <td><p th:text="${order.getId()}"></p></td>
             <td><p th:text="${order.getTotal()}"></p></td>
@@ -93,17 +93,34 @@
     </table>
 
     <br>
-    <div style='text-align:center;'>
-        <a class='btn btn-info' href='http://localhost:8080/test_cakeshop_jsp/admin/orderList.action?page=1'>首页</a>
-        <a class='btn btn-info' href='http://localhost:8080/test_cakeshop_jsp/admin/orderList.action?page=3'>上一页</a>
-        <h2 style='display:inline;'>[4/5]</h2>
-        <h2 style='display:inline;'>[42]</h2>
-        <a class='btn btn-info' href='http://localhost:8080/test_cakeshop_jsp/admin/orderList.action?page=5'>下一页</a>
-        <a class='btn btn-info' href='http://localhost:8080/test_cakeshop_jsp/admin/orderList.action?page=5'>尾页</a>
-        <input type='text' class='form-control' style='display:inline;width:60px;' value=''/><a class='btn btn-info'
-                                                                                                href='javascript:void(0);'
-                                                                                                onclick='location.href="http://localhost:8080/test_cakeshop_jsp/admin/orderList.action?page="+(this.previousSibling.value)+""'>GO</a>
+    <!--分页-->
+    <div>
+        <div style='text-align:center;'>
+            <a th:class="${pageInfo.isIsFirstPage()?'btn btn-info disabled':'btn btn-info'}"
+               th:href="@{/admin/order/list(status=${status},pageNum=1)}"
+               th:text="${'首页'}">
+            </a>
+            <a th:class="${pageInfo.isIsFirstPage()?'btn btn-info disabled':'btn btn-info'}"
+               th:href="@{/admin/order/list(status=${status},pageNum=${pageInfo.getPageNum()-1})}"
+               th:text="${'上一页'}">
+            </a>
+
+            <h2 style='display:inline;'
+                th:text="'['+${pageInfo.getPageNum()}+'/'+${pageInfo.getPages()}+']'"></h2>
+            <h2 style='display:inline;'
+                th:text="'['+${pageInfo.getTotal()}+']'"></h2>
+
+            <a th:class="${pageInfo.isIsLastPage()?'btn btn-info disabled':'btn btn-info'}"
+               th:href="@{/admin/order/list(status=${status},pageNum=${pageInfo.getPageNum()+1})}"
+               th:text="${'下一页'}">
+            </a>
+            <a th:class="${pageInfo.isIsLastPage()?'btn btn-info disabled':'btn btn-info'}"
+               th:href="@{/admin/order/list(status=${status},pageNum=${pageInfo.getPages()})}"
+               th:text="${'尾页'}">
+            </a>
+        </div>
     </div>
+    <!--//分页-->
     <br>
 </div>
 </body>

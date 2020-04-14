@@ -1,6 +1,7 @@
 package com.cyan.service.inteface;
 
 import com.cyan.pojo.Order;
+import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 
@@ -46,8 +47,9 @@ public interface OrderService{
     List<Order> selectAllByUserId(Integer id);
 
     /*根据Status状态查询订单 [0-所有 1-未付款 2-已付款 3-配送中 4-已完成]*/
-    List<Order> selectAllByStatus(Integer status);
+    PageInfo<Order> selectAllByStatus(Integer status, Integer pageNum, Integer pageSize);
 
     /*修改订单状态*/
     int updateStatusById(Integer id, Integer status);
+
 }

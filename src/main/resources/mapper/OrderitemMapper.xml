@@ -277,5 +277,10 @@
         DELETE FROM `orderitem`
         WHERE order_id = #{id}
     </delete>
+    <select id="selectByGoodId" resultType="Orderitem">
+        SELECT *
+        FROM orderitem
+        WHERE goods_id = #{id}
+    </select>
 
 </mapper>

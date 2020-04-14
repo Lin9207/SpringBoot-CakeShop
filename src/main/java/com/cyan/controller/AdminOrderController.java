@@ -2,6 +2,7 @@ package com.cyan.controller;
 
 import com.cyan.pojo.Order;
 import com.cyan.service.inteface.OrderService;
+import com.github.pagehelper.PageInfo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,12 +23,12 @@ public class AdminOrderController {
 
     @GetMapping("/list")
     public String list(@RequestParam(value = "status", defaultValue = "0") Integer status,
+                       @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                        Model model) {
 
-        List<Order> orderList = orderService.selectAllByStatus(status);
-        model.addAttribute("orderList", orderList);
+        PageInfo<Order> pageInfo = orderService.selectAllByStatus(status,pageNum,8);
+        model.addAttribute("pageInfo", pageInfo);
         model.addAttribute("status", status);
-
         return "admin/order_list";
     }
 

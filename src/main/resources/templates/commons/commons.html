@@ -92,7 +92,8 @@
             <div class="header-right cart">
                 <a th:href="@{/good/cart}" th:class="${activeType=='good_cart.html'?'active':''}">
                     <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true">
-                        <span class="card_num" style="float: right" th:if="${session.userOrder}!=null" th:text="${session.userOrder.getAmount()}"></span>
+                        <span class="card_num" style="float: right" th:if="${session.userOrder}!=null"
+                              th:text="${session.userOrder.getAmount()}"></span>
                     </span>
                 </a>
             </div>

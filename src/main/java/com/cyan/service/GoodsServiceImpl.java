@@ -5,6 +5,11 @@ import com.cyan.mapper.RecommendMapper;
 import com.cyan.pojo.Goods;
 import com.cyan.pojo.Recommend;
 import com.cyan.service.inteface.GoodsService;
+import com.cyan.service.inteface.OrderService;
+import com.cyan.service.inteface.OrderitemService;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,13 +23,21 @@ public class GoodsServiceImpl implements GoodsService {
     private GoodsMapper goodsMapper;
     @Resource
     private RecommendMapper recommendMapper;
+    @Resource
+    private OrderitemService orderitemService;
 
     @Override
     @Transactional
     public int deleteByPrimaryKey(Integer id) {
+
+        /*订单项中存在 不能删除*/
+        if (orderitemService.selectByGoodId(id).size()>0)
+            return 0;
+
         /*推荐表中删除*/
         recommendMapper.deleteByGoodId(id);
-        return goodsMapper.deleteByPrimaryKey(id);
+        goodsMapper.deleteByPrimaryKey(id);
+        return 1;
     }
 
     @Override
@@ -106,29 +119,40 @@ public class GoodsServiceImpl implements GoodsService {
 
     /*根据表字段name模糊查询*/
     @Override
-    public List<Goods> getSearchGoods(String searchName) {
+    public PageInfo<Goods> getSearchGoods(String searchName, Integer pageNum, Integer pageSize) {
+        /*设置分页*/
+        Page<?> page = PageHelper.startPage(pageNum, pageSize, true);
+        /*查询*/
         List<Goods> list = goodsMapper.getSearchGoods(searchName);
-        return list;
+        /*返回分页查询对象*/
+        return new PageInfo<Goods>(list, pageSize);
     }
 
     /*根据类目ID查询商品*/
     @Override
-    public List<Goods> selectByTypeId(Integer typeId) {
+    public PageInfo<Goods> selectByTypeId(Integer typeId, Integer pageNum, Integer pageSize) {
+        /*设置分页*/
+        Page<?> page = PageHelper.startPage(pageNum, pageSize, true);
+        /*查询*/
         List<Goods> list = goodsMapper.selectByTypeId(typeId);
-        return list;
+        /*返回分页查询对象*/
+        return new PageInfo<Goods>(list, pageSize);
     }
 
     /*根据Recommend推荐表查询 - type(0-所有 1-条幅/1-热销/2-新品)*/
     @Override
-    public List<Goods> selectByRecommendType(Integer type) {
-
+    public PageInfo<Goods> selectByRecommendType(Integer type, Integer pageNum, Integer pageSize) {
+        /*设置分页*/
+        Page<?> page = PageHelper.startPage(pageNum, pageSize, true);
+        /*查询*/
         List<Goods> list = goodsMapper.selectByRecommendType(type);
         for (Goods good : list) {
             good.setScroll(isScroll(good.getId()));
             good.setHot(isHot(good.getId()));
             good.setNew(isNew(good.getId()));
         }
-        return list;
+        /*返回分页查询对象*/
+        return new PageInfo<Goods>(list, pageSize);
     }
 
     // 判断是都为条幅商品

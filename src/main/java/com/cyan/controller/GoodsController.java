@@ -6,6 +6,9 @@ import com.cyan.pojo.Type;
 import com.cyan.pojo.Users;
 import com.cyan.service.inteface.GoodsService;
 import com.cyan.service.inteface.TypeService;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,20 +34,22 @@ public class GoodsController {
         return "good_detail";
     }
 
-    // 分类获取所有商品
+    // 分页-分类获取所有商品
     @GetMapping("/list/{typeId}")
-    public String getList(@PathVariable("typeId") Integer typeId, Model model) {
+    public String getList(@PathVariable("typeId") Integer typeId,
+                          @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
+                          Model model) {
 
-        List<Goods> list = goodsService.selectByTypeId(typeId);
-        model.addAttribute("list", list);
+        PageInfo<Goods> pageInfo = goodsService.selectByTypeId(typeId,pageNum,8);
+        model.addAttribute("pageInfo", pageInfo);
 
         // 查询typeId类目
         Type type = null;
         if (typeId != 0) {
             type = typeService.selectByPrimaryKey(typeId);
         }
-        model.addAttribute("type", type);
 
+        model.addAttribute("type", type);
         return "good_list";
     }
 
@@ -54,21 +59,25 @@ public class GoodsController {
         return "good_cart";
     }
 
-    // 热销&新品
+    // 分页-热销&新品
     @GetMapping("/recommend")
-    public String getRecommend(@RequestParam("type") Integer type, Model model) {
-        List<Goods> list = goodsService.selectByRecommendType(type);
-        model.addAttribute("list", list);
+    public String getRecommend(@RequestParam("type") Integer type,
+                               @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
+                               Model model) {
+        PageInfo<Goods> pageInfo = goodsService.selectByRecommendType(type,pageNum,8);
+        model.addAttribute("pageInfo", pageInfo);
         model.addAttribute("type", type);
         return "good_recommend";
     }
 
-    // 搜索
+    // 分页-搜索
     @GetMapping("/search")
-    public String getSearch(@RequestParam("searchName") String searchName, Model model) {
-        List<Goods> searchList = goodsService.getSearchGoods(searchName);
+    public String getSearch(@RequestParam("searchName") String searchName,
+                            @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
+                            Model model) {
+        PageInfo<Goods> pageInfo = goodsService.getSearchGoods(searchName,pageNum,8);
         model.addAttribute("searchName", searchName);
-        model.addAttribute("searchList", searchList);
+        model.addAttribute("pageInfo", pageInfo);
         return "good_search";
     }
 

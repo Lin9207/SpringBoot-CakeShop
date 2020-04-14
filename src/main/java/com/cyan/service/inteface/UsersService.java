@@ -3,6 +3,7 @@ package com.cyan.service.inteface;
 import java.util.List;
 
 import com.cyan.pojo.Users;
+import com.github.pagehelper.PageInfo;
 
 public interface UsersService {
 
@@ -53,6 +54,6 @@ public interface UsersService {
     /*查询用户登录*/
     Users login(String usernameOrEmail, String password);
 
-    /*查询所有用户*/
-    List<Users> selectAll();
+    /*分页 - 查询所有用户*/
+    PageInfo<Users> selectAll(Integer paegNum,Integer pageSize);
 }

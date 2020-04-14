@@ -4,10 +4,10 @@ import com.cyan.commons.UploadFile;
 import com.cyan.pojo.Goods;
 import com.cyan.service.inteface.GoodsService;
 import com.cyan.service.inteface.RecommendService;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.ClassUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,9 +25,10 @@ public class AdminGoodsController {
     /*查询商品 返回列表*/
     @GetMapping("/list")
     public String list(@RequestParam(value = "url_r_type", defaultValue = "0") Integer type,
+                       @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                        Model model) {
-        List<Goods> goodList = goodsService.selectByRecommendType(type);
-        model.addAttribute("goodList", goodList);
+        PageInfo<Goods> pageInfo = goodsService.selectByRecommendType(type,pageNum,8);
+        model.addAttribute("pageInfo", pageInfo);
 
         model.addAttribute("url_r_type", type);//将当前url类型专递过去
         return "admin/goods_list";
@@ -64,6 +65,7 @@ public class AdminGoodsController {
                        @RequestParam("image1_file") MultipartFile image1,
                        @RequestParam("image2_file") MultipartFile image2,
                        @RequestParam(value = "url_r_type",defaultValue = "0") Integer url_r_type,
+                       @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                        Goods good, Model model) {
 
         /*保存表单提交的图片文件,并返回文件名,设置到商品对象中*/
@@ -79,8 +81,8 @@ public class AdminGoodsController {
         }
 
         /*修改完成-获取商品信息,返回当前商品管理页*/
-        List<Goods> goodList = goodsService.selectByRecommendType(url_r_type);
-        model.addAttribute("goodList", goodList);
+        PageInfo<Goods> pageInfo = goodsService.selectByRecommendType(url_r_type,pageNum,8);
+        model.addAttribute("pageInfo", pageInfo);
         model.addAttribute("url_r_type", url_r_type);// 将当前url类型专递过去
         return "admin/goods_list";
     }
@@ -113,6 +115,7 @@ public class AdminGoodsController {
                        @RequestParam("image1_file") MultipartFile image1,
                        @RequestParam("image2_file") MultipartFile image2,
                        @RequestParam(value = "url_r_type",defaultValue = "0") Integer url_r_type,
+                       @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                        Goods good, Model model) {
 
         /*保存表单提交的图片文件,并返回文件名,设置到商品对象中*/
@@ -124,8 +127,8 @@ public class AdminGoodsController {
         model.addAttribute("msg", "商品添加成功！");
 
         /*修改完成-获取商品信息,返回当前商品管理页*/
-        List<Goods> goodList = goodsService.selectByRecommendType(url_r_type);
-        model.addAttribute("goodList", goodList);
+        PageInfo<Goods> pageInfo = goodsService.selectByRecommendType(url_r_type,pageNum,8);
+        model.addAttribute("pageInfo", pageInfo);
         model.addAttribute("url_r_type", url_r_type);// 将当前url类型专递过去
 
         return "admin/goods_list";

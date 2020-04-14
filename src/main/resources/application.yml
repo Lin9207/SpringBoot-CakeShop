@@ -35,3 +35,10 @@ spring:
 mybatis:
   type-aliases-package: com.cyan.pojo            # 配置别名
   mapper-locations: classpath:mapper/*.xml       # mapper.xml配置文件
+
+# Mybatis分页插件
+pagehelper:
+  helperDialect: mysql      # 数据库
+  reasonable: false         # 是否分页合理化
+  rowBoundsWithCount: true  # 是否进行count查询
+  offsetAsPageNum: true     # 是否将参数offset作为PageNum使用

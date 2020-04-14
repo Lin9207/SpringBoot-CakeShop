@@ -471,10 +471,13 @@
     <!--根据Recommend推荐表查询 - type(0-所有 1-条幅/1-热销/2-新品)-->
     <select id="selectByRecommendType" parameterType="Integer" resultMap="BaseResultMap">
         SELECT g.id, g.name, g.cover, g.image1, g.image2, g.price, g.intro, g.stock, g.type_id, t.name type_name
-        FROM goods g,type t,recommend r
-        WHERE g.type_id = t.id
-        <if test="type != null and type > 0">
-            AND g.id = r.goods_id AND r.type = #{type}
-        </if>
+        FROM
+            goods g,type t
+            <if test="type != null and type > 0">,recommend r</if>
+        WHERE
+            g.type_id = t.id
+            <if test="type != null and type > 0">
+                AND g.id = r.goods_id AND r.type = #{type}
+            </if>
     </select>
 </mapper>

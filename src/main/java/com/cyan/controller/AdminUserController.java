@@ -2,6 +2,7 @@ package com.cyan.controller;
 
 import com.cyan.pojo.Users;
 import com.cyan.service.inteface.UsersService;
+import com.github.pagehelper.PageInfo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,9 +20,10 @@ public class AdminUserController {
     private UsersService usersService;
 
     @GetMapping("/list")
-    public String userList(Model model) {
-        List<Users> userList = usersService.selectAll();
-        model.addAttribute("userList", userList);
+    public String userList(@RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
+                           Model model) {
+        PageInfo<Users> pageInfo = usersService.selectAll(pageNum,8);
+        model.addAttribute("pageInfo", pageInfo);
         return "admin/user_list";
     }
 
