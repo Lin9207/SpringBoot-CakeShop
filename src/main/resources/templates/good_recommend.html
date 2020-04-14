@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>蛋糕店- 热销&新品></title>
+    <title th:text="${type==2?'热销商品':'新品推荐'}"></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link type="text/css" rel="stylesheet" th:href="@{~/css/bootstrap.css}">
