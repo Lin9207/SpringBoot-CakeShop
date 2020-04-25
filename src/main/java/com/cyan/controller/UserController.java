@@ -2,7 +2,9 @@ package com.cyan.controller;
 
 import com.cyan.pojo.Users;
 import com.cyan.service.inteface.UsersService;
+import com.cyan.utils.AesUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.DigestUtils;
@@ -19,6 +21,8 @@ public class UserController {
 
     @Autowired
     private UsersService usersService;
+    @Value("${strKeyAES}") // 秘钥
+    private String key;
 
     // 登录页
     @GetMapping("/login")
@@ -32,9 +36,6 @@ public class UserController {
                         @RequestParam("password") String password,
                         HttpSession session,
                         Model model) {
-
-        // 加密
-//        password = DigestUtils.md5DigestAsHex(password.getBytes());
 
         Users user = usersService.login(usernameOrEmail, password);
         if (user != null) {
@@ -61,10 +62,9 @@ public class UserController {
 
     // 注册
     @PostMapping("/register")
-    public String register(Users user, Model model) {
+    public String register(Users user, Model model) throws Exception {
 
         boolean isExsit = usersService.register(user);
-
         if (isExsit) {
             model.addAttribute("msg", "注册成功,请登录");
             return "user_login";
@@ -109,14 +109,15 @@ public class UserController {
                                  HttpSession session,
                                  Model model) {
 
-        // 加密
-//        password = DigestUtils.md5DigestAsHex(password.getBytes());
-//        passwordNew = DigestUtils.md5DigestAsHex(password.getBytes());
-
         Users loginUser = (Users) session.getAttribute("loginUser");
-
-        /*验证输入的原密码是否正确*/
-        if (password.equals(loginUser.getPassword())) {
+        /*验证输入的原密码是否正确 - 原密码解密判断*/
+        String decryptPassword = null;
+        try {
+            decryptPassword = AesUtils.Decrypt(loginUser.getPassword(), key);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (password.equals(decryptPassword)) {
             /*修改密码,添加到数据库*/
             loginUser.setPassword(passwordNew);
             int success = usersService.updateByPrimaryKeySelective(loginUser);

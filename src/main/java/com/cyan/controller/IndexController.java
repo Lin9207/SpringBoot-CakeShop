@@ -4,7 +4,9 @@ import com.cyan.pojo.Goods;
 import com.cyan.pojo.Users;
 import com.cyan.service.inteface.GoodsService;
 import com.cyan.service.inteface.UsersService;
+import com.cyan.utils.AesUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,10 +24,12 @@ public class IndexController {
     private GoodsService goodsService;
     @Autowired
     private UsersService usersService;
+    @Value("${strKeyAES}") // 秘钥
+    private static String key;
 
     // 前台主页
-    @RequestMapping(value = {"/","/index.html"})
-    public String index(Model model){
+    @RequestMapping(value = {"/", "/index.html"})
+    public String index(Model model) {
 
 //         获取条幅商品
         Goods scroll = goodsService.getScrollGoods();
@@ -41,14 +45,14 @@ public class IndexController {
     }
 
     // 后台主页
-    @RequestMapping(value = {"/admin/","/admin/index.html"})
-    public String adminIndex(){
+    @RequestMapping(value = {"/admin/", "/admin/index.html"})
+    public String adminIndex() {
         return "admin/index";
     }
 
     // 后台登录页
     @GetMapping(value = {"/adminLogin.html"})
-    public String adminLoginPage(){
+    public String adminLoginPage() {
         return "adminLogin";
     }
 
@@ -56,7 +60,7 @@ public class IndexController {
     @PostMapping(value = {"/adminLogin"})
     public String adminLogin(@RequestParam("username") String username,
                              @RequestParam("password") String password,
-                             HttpSession session){
+                             HttpSession session) {
 
         Users login = usersService.login(username, password);
         if (login != null) {

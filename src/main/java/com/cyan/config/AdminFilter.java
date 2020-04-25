@@ -19,7 +19,7 @@ public class AdminFilter  implements Filter {
         // 获取当前登录的用户
         Users user = (Users) req.getSession().getAttribute("loginUser");
         // 如果已登录 并且是 管理员则放行
-        if (user != null && user.getIsadmin()) {
+        if (user != null && user.isIsadmin()) {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
             // 非管理员重定向到登录页

@@ -52,12 +52,12 @@ public class Users implements Serializable {
     /**
     * 是否是管理员
     */
-    private Boolean isadmin;
+    private boolean isadmin;
 
     /**
     * 是否已验证邮箱
     */
-    private Boolean isvalidate;
+    private boolean isvalidate;
 
     private static final long serialVersionUID = 1L;
 }

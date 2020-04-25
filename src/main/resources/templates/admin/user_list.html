@@ -34,7 +34,7 @@
         </tr>
 
     <div th:if="${pageInfo.getList()}!=null" th:each="user:${pageInfo.getList()}">
-        <tr th:if="!${user.getIsadmin()}">
+        <tr th:if="!${user.isIsadmin()}">
             <td>
                 <p th:text="${user.getId()}"></p>
             </td>

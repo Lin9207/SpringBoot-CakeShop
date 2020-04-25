@@ -32,7 +32,7 @@ public interface UsersService {
     int updateByPrimaryKey(Users record);
 
     /*选择修改User用户表*/
-    int updateByPrimaryKeySelective(Users record);
+    int updateByPrimaryKeySelective(Users record) ;
 
     /*批量修改User用户表*/
     int updateBatch(List<Users> list);

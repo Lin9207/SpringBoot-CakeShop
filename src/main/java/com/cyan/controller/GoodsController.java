@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -47,20 +48,22 @@ public class GoodsController {
         }
 
         // 推荐商品 - 用户已登录，推荐当前用户浏览最多商品 - 未登录，随机推荐热销商品
-        List<Goods> recordList = null;
+        List<Goods> recordList = new ArrayList<>();
         Set<Goods> recordSet = new HashSet<>();
-        if (user != null)
+        if (user != null) {
             recordList = goodsService.selectBySrecords(user.getId(), 10);
-        else
+        }
+        if (recordList.size() < 5) { // 用户获取商品记录少于5,应该为新用户,推荐热销商品
             recordList = goodsService.selectByRecommendType(2, 1, 10).getList();
+        }
         // 随机抽取四个商品
-        for (int i = 0; i < recordList.size(); i++) {
+        for (int i = 0; i < 10; i++) {
             if (recordSet.size() >= 4)
                 break;
-            Goods goods = recordList.get((int) (Math.random() * 9 + 0));
+            Goods goods = recordList.get((int) (Math.random() * recordList.size() + 0));
             recordSet.add(goods);
         }
-        model.addAttribute("recordSet", recordSet);
+        model.addAttribute("recordList", recordSet);
 
         // 获取商品详情信息
         Goods goods = goodsService.selectByPrimaryKey(id);

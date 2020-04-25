@@ -10,6 +10,9 @@ ftp:
   password: 8uFYnRPnbpJ1  # FTP登录密码
   filePath: picture       # FTP服务器文件存放路径
 
+# AES秘钥
+strKeyAES: SjQxH8lwDrFfwCEw
+
 # spring配置
 spring:
   profiles: dev # 配置开发环境

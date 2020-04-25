@@ -90,7 +90,7 @@
 
         <div class="product-model-sec single-product-grids" style="margin: 2em 0 0 0">
 
-            <div class="product-grid single-product" th:each="recordGoods:${recordSet}">
+            <div class="product-grid single-product" th:each="recordGoods:${recordList}">
                 <a th:href="@{'/good/detail/'+${recordGoods.getId()}}">
                     <div class="more-product"><span> </span></div>
                     <div class="product-img b-link-stripe b-animate-go  thickbox">

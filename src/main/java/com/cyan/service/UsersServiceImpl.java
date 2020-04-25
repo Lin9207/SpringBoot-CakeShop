@@ -3,11 +3,13 @@ package com.cyan.service;
 import com.cyan.mapper.UsersMapper;
 import com.cyan.pojo.Users;
 import com.cyan.service.inteface.UsersService;
+import com.cyan.utils.AesUtils;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
@@ -18,6 +20,8 @@ import java.util.List;
 public class UsersServiceImpl implements UsersService {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
+    @Value("${strKeyAES}") // 秘钥
+    private String key;
 
     @Resource
     private UsersMapper usersMapper;
@@ -54,6 +58,16 @@ public class UsersServiceImpl implements UsersService {
 
     @Override
     public int updateByPrimaryKeySelective(Users record) {
+
+        // 加密密码
+        String encryptPassword = null;
+        try {
+            encryptPassword = AesUtils.Encrypt(record.getPassword(), key);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        record.setPassword(encryptPassword);
+
         return usersMapper.updateByPrimaryKeySelective(record);
     }
 
@@ -81,19 +95,24 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public Users login(String usernameOrEmail, String password) {
 
-        // 加密
-//        password = DigestUtils.md5DigestAsHex(password.getBytes());
+        // AES加密密码
+        String encryptPassword = null;
+        try {
+            encryptPassword = AesUtils.Encrypt(password, key);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         logger.info("用户请求登录");
         Users user = null;
         // 验证用户名与密码
-        user = usersMapper.selectByUsernamePassword(usernameOrEmail, password);
+        user = usersMapper.selectByUsernamePassword(usernameOrEmail, encryptPassword); // 密文验证
         if (user != null) {
             logger.info("用户名登录");
             return user;
         }
         // 验证邮箱与密码
-        user = usersMapper.selectByEmailPassword(usernameOrEmail, password);
+        user = usersMapper.selectByEmailPassword(usernameOrEmail, encryptPassword); // 密文验证
         if (user != null) {
             logger.info("邮箱登录");
             return user;
@@ -107,8 +126,14 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public boolean register(Users user) {
 
-        // 加密
-//        user.setPassword(DigestUtils.md5DigestAsHex(user.getPassword().getBytes()));
+        // AES密码加密
+        String encryptPassword = null;
+        try {
+            encryptPassword = AesUtils.Encrypt(user.getPassword(), key);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        user.setPassword(encryptPassword);
 
         logger.info("用户注册");
         /*查询用户名与邮箱是否存在,如果存在就不能注册创建*/

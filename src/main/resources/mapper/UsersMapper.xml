@@ -11,8 +11,8 @@
         <result column="name" jdbcType="VARCHAR" property="name"/>
         <result column="phone" jdbcType="VARCHAR" property="phone"/>
         <result column="address" jdbcType="VARCHAR" property="address"/>
-        <result column="isadmin" jdbcType="BIT" property="isadmin"/>
-        <result column="isvalidate" jdbcType="BIT" property="isvalidate"/>
+        <result column="isadmin" jdbcType="BOOLEAN" property="isadmin"/>
+        <result column="isvalidate" jdbcType="BOOLEAN" property="isvalidate"/>
     </resultMap>
     <sql id="Base_Column_List">
         <!--@mbg.generated-->
@@ -37,7 +37,7 @@
         isadmin, isvalidate)
         values (#{username,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
         #{name,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR},
-        #{isadmin,jdbcType=BIT}, #{isvalidate,jdbcType=BIT})
+        #{isadmin,jdbcType=BOOLEAN}, #{isvalidate,jdbcType=BOOLEAN})
     </insert>
     <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.cyan.pojo.Users"
             useGeneratedKeys="true">
@@ -89,10 +89,10 @@
                 #{address,jdbcType=VARCHAR},
             </if>
             <if test="isadmin != null">
-                #{isadmin,jdbcType=BIT},
+                #{isadmin,jdbcType=BOOLEAN},
             </if>
             <if test="isvalidate != null">
-                #{isvalidate,jdbcType=BIT},
+                #{isvalidate,jdbcType=BOOLEAN},
             </if>
         </trim>
     </insert>
@@ -119,10 +119,10 @@
                 address = #{address,jdbcType=VARCHAR},
             </if>
             <if test="isadmin != null">
-                isadmin = #{isadmin,jdbcType=BIT},
+                isadmin = #{isadmin,jdbcType=BOOLEAN},
             </if>
             <if test="isvalidate != null">
-                isvalidate = #{isvalidate,jdbcType=BIT},
+                isvalidate = #{isvalidate,jdbcType=BOOLEAN},
             </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
@@ -136,8 +136,8 @@
         `name` = #{name,jdbcType=VARCHAR},
         phone = #{phone,jdbcType=VARCHAR},
         address = #{address,jdbcType=VARCHAR},
-        isadmin = #{isadmin,jdbcType=BIT},
-        isvalidate = #{isvalidate,jdbcType=BIT}
+        isadmin = #{isadmin,jdbcType=BOOLEAN},
+        isvalidate = #{isvalidate,jdbcType=BOOLEAN}
         where id = #{id,jdbcType=INTEGER}
     </update>
     <update id="updateBatch" parameterType="java.util.List">
@@ -176,12 +176,12 @@
             </trim>
             <trim prefix="isadmin = case" suffix="end,">
                 <foreach collection="list" index="index" item="item">
-                    when id = #{item.id,jdbcType=INTEGER} then #{item.isadmin,jdbcType=BIT}
+                    when id = #{item.id,jdbcType=INTEGER} then #{item.isadmin,jdbcType=BOOLEAN}
                 </foreach>
             </trim>
             <trim prefix="isvalidate = case" suffix="end,">
                 <foreach collection="list" index="index" item="item">
-                    when id = #{item.id,jdbcType=INTEGER} then #{item.isvalidate,jdbcType=BIT}
+                    when id = #{item.id,jdbcType=INTEGER} then #{item.isvalidate,jdbcType=BOOLEAN}
                 </foreach>
             </trim>
         </trim>
@@ -239,14 +239,14 @@
             <trim prefix="isadmin = case" suffix="end,">
                 <foreach collection="list" index="index" item="item">
                     <if test="item.isadmin != null">
-                        when id = #{item.id,jdbcType=INTEGER} then #{item.isadmin,jdbcType=BIT}
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.isadmin,jdbcType=BOOLEAN}
                     </if>
                 </foreach>
             </trim>
             <trim prefix="isvalidate = case" suffix="end,">
                 <foreach collection="list" index="index" item="item">
                     <if test="item.isvalidate != null">
-                        when id = #{item.id,jdbcType=INTEGER} then #{item.isvalidate,jdbcType=BIT}
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.isvalidate,jdbcType=BOOLEAN}
                     </if>
                 </foreach>
             </trim>
@@ -264,7 +264,7 @@
         <foreach collection="list" item="item" separator=",">
             (#{item.username,jdbcType=VARCHAR}, #{item.email,jdbcType=VARCHAR}, #{item.password,jdbcType=VARCHAR},
             #{item.name,jdbcType=VARCHAR}, #{item.phone,jdbcType=VARCHAR}, #{item.address,jdbcType=VARCHAR},
-            #{item.isadmin,jdbcType=BIT}, #{item.isvalidate,jdbcType=BIT})
+            #{item.isadmin,jdbcType=BOOLEAN}, #{item.isvalidate,jdbcType=BOOLEAN})
         </foreach>
     </insert>
     <insert id="insertOrUpdate" keyColumn="id" keyProperty="id" parameterType="com.cyan.pojo.Users"
@@ -295,8 +295,8 @@
             #{name,jdbcType=VARCHAR},
             #{phone,jdbcType=VARCHAR},
             #{address,jdbcType=VARCHAR},
-            #{isadmin,jdbcType=BIT},
-            #{isvalidate,jdbcType=BIT},
+            #{isadmin,jdbcType=BOOLEAN},
+            #{isvalidate,jdbcType=BOOLEAN},
         </trim>
         on duplicate key update
         <trim suffixOverrides=",">
@@ -309,8 +309,8 @@
             `name` = #{name,jdbcType=VARCHAR},
             phone = #{phone,jdbcType=VARCHAR},
             address = #{address,jdbcType=VARCHAR},
-            isadmin = #{isadmin,jdbcType=BIT},
-            isvalidate = #{isvalidate,jdbcType=BIT},
+            isadmin = #{isadmin,jdbcType=BOOLEAN},
+            isvalidate = #{isvalidate,jdbcType=BOOLEAN},
         </trim>
     </insert>
     <insert id="insertOrUpdateSelective" keyColumn="id" keyProperty="id" parameterType="com.cyan.pojo.Users"
@@ -370,10 +370,10 @@
                 #{address,jdbcType=VARCHAR},
             </if>
             <if test="isadmin != null">
-                #{isadmin,jdbcType=BIT},
+                #{isadmin,jdbcType=BOOLEAN},
             </if>
             <if test="isvalidate != null">
-                #{isvalidate,jdbcType=BIT},
+                #{isvalidate,jdbcType=BOOLEAN},
             </if>
         </trim>
         on duplicate key update
@@ -400,10 +400,10 @@
                 address = #{address,jdbcType=VARCHAR},
             </if>
             <if test="isadmin != null">
-                isadmin = #{isadmin,jdbcType=BIT},
+                isadmin = #{isadmin,jdbcType=BOOLEAN},
             </if>
             <if test="isvalidate != null">
-                isvalidate = #{isvalidate,jdbcType=BIT},
+                isvalidate = #{isvalidate,jdbcType=BOOLEAN},
             </if>
         </trim>
     </insert>
