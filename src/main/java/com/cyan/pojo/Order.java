@@ -1,11 +1,12 @@
 package com.cyan.pojo;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.*;
-
-import lombok.*;
-import org.springframework.boot.context.properties.bind.DefaultValue;
 
 /**
  * 订单表

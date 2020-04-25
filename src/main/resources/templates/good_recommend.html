@@ -8,14 +8,13 @@
     <link type="text/css" rel="stylesheet" th:href="@{~/css/style.css}">
     <script type="text/javascript" th:src="@{~/js/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{~/js/bootstrap.min.js}"></script>
-    <script type="text/javascript" th:src="@{~/js/simpleCart.min.js}"></script>
     <script type="text/javascript" th:src="@{~/layer/layer.js}"></script>
     <script type="text/javascript" th:src="@{~/js/cart.js}"></script>
 </head>
 <body>
 
 <!--header-->
-<div th:replace="~{/commons/commons.html::header(activeType='good_recommend'+${type}+'.html')}"></div>
+<div th:replace="~{commons/commons.html::header(activeType='good_recommend'+${type}+'.html')}"></div>
 <!--//header-->
 
 <!--products-->
@@ -33,7 +32,7 @@
                 <a th:href="@{'/good/detail/'+${good.getId()}}">
                     <div class="more-product"><span> </span></div>
                     <div class="product-img b-link-stripe b-animate-go  thickbox">
-                        <img th:src="@{${good.getCover()}}" class="img-responsive" th:alt="${good.getName()}" width="240" height="240">
+                        <img th:src="@{'http://111.230.195.169:8080' + ${good.getCover()}}" class="img-responsive" th:alt="${good.getName()}" width="240" height="240">
                         <div class="b-wrapper">
                             <h4 class="b-animate b-from-left  b-delay03">
                                 <button>查看详情</button>

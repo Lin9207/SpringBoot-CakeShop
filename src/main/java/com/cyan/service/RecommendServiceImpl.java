@@ -1,5 +1,7 @@
 package com.cyan.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -11,6 +13,8 @@ import com.cyan.service.inteface.RecommendService;
 
 @Service
 public class RecommendServiceImpl implements RecommendService {
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Resource
     private RecommendMapper recommendMapper;
@@ -73,19 +77,26 @@ public class RecommendServiceImpl implements RecommendService {
     /*根据推荐类型查询 返回Recommend集合*/
     @Override
     public List<Recommend> selectByTypeId(Integer typeid) {
-        return recommendMapper.selectByTypeId(typeid);
+        logger.info("根据推荐类型查询");
+        logger.info("typeid = " + typeid);
+        List<Recommend> list = recommendMapper.selectByTypeId(typeid);
+        logger.info("查询成功");
+        return list;
     }
 
     /*修改推荐类型*/
     @Override
     public void changeType(Integer r_type, Integer g_id) {
+        logger.info("修改推荐类型");
         /*根据 商品ID 推荐类型 查询Recommend表*/
         Recommend isRecommend = recommendMapper.isRecommend(r_type, g_id);
         /*如果存在 则删除 否则添加*/
         if (isRecommend != null) {
             recommendMapper.deleteByPrimaryKey(isRecommend.getId());
         } else {
-            recommendMapper.insert(new Recommend(r_type,g_id));
+            recommendMapper.insert(new Recommend(r_type, g_id));
         }
+        logger.info("修改成功");
+
     }
 }

@@ -1,12 +1,10 @@
 package com.cyan.mapper;
 
 import com.cyan.pojo.Users;
-
-import java.util.List;
-
-import org.apache.catalina.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 @Mapper
 public interface UsersMapper {

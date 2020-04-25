@@ -1,13 +1,22 @@
 package com.cyan.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
 import javax.annotation.Resource;
+
 import com.cyan.pojo.Orderitem;
+
 import java.util.List;
+
 import com.cyan.mapper.OrderitemMapper;
 import com.cyan.service.inteface.OrderitemService;
+
 @Service
-public class OrderitemServiceImpl implements OrderitemService{
+public class OrderitemServiceImpl implements OrderitemService {
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Resource
     private OrderitemMapper orderitemMapper;
@@ -70,18 +79,21 @@ public class OrderitemServiceImpl implements OrderitemService{
     /*根据订单ID查询所有订单项*/
     @Override
     public List<Orderitem> selectAllByOrderId(Integer id) {
+        logger.info("获取所有订单项");
         return orderitemMapper.selectAllByOrderId(id);
     }
 
     /*根据订单ID删除订单项*/
     @Override
     public int deleteByOrderId(Integer id) {
+        logger.info("删除订单项");
         return orderitemMapper.deleteByOrderId(id);
     }
 
     /*根据商品ID查询订单项*/
     @Override
     public List<Orderitem> selectByGoodId(Integer id) {
+        logger.info("获取订单项");
         return orderitemMapper.selectByGoodId(id);
     }
 }

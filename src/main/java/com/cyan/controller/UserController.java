@@ -5,6 +5,7 @@ import com.cyan.service.inteface.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +32,10 @@ public class UserController {
                         @RequestParam("password") String password,
                         HttpSession session,
                         Model model) {
+
+        // 加密
+//        password = DigestUtils.md5DigestAsHex(password.getBytes());
+
         Users user = usersService.login(usernameOrEmail, password);
         if (user != null) {
             session.setAttribute("loginUser", user);
@@ -103,6 +108,10 @@ public class UserController {
                                  @RequestParam("passwordNew") String passwordNew,
                                  HttpSession session,
                                  Model model) {
+
+        // 加密
+//        password = DigestUtils.md5DigestAsHex(password.getBytes());
+//        passwordNew = DigestUtils.md5DigestAsHex(password.getBytes());
 
         Users loginUser = (Users) session.getAttribute("loginUser");
 

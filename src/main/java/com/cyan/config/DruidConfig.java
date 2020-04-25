@@ -52,7 +52,17 @@ public class DruidConfig {
 
         // exclusions：设置哪些请求进行过滤排除掉，从而不进行统计
         Map<String, String> initParams = new HashMap<>();
-        initParams.put("exclusions","style/**,/druid/*");// '/druid/*'为Druid监控管理后台的Servlet路径
+        initParams.put("exclusions","" + // 静态文件过滤
+                                    "*.css," +
+                                    "*.js," +
+                                    "*.ttf," +
+                                    "*.woff," +
+                                    "*.woff2," +
+                                    "*.jpg," +
+                                    "*.gif," +
+                                    "*.png," +
+                                    "*.ico," +
+                                    "/druid/*");// '/druid/*'为Druid监控管理后台的Servlet路径
         bean.setInitParameters(initParams);
 
         // '/*' 表示过滤所有请求

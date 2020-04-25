@@ -6,8 +6,6 @@ import com.cyan.pojo.Type;
 
 public interface TypeService {
 
-//    增
-
     /*插入所有字段 - 主键自增,插入Type类目表*/
     int insert(Type record);
 
@@ -23,12 +21,8 @@ public interface TypeService {
     /*选择插入或更新所有Type类目表字段 - 主键自增,插入Type类目表,主键存在就执行更新*/
     int insertOrUpdateSelective(Type record);
 
-//    删
-
     /*删除指定ID的Type类目表信息*/
     int deleteByPrimaryKey(Integer id);
-
-//    改
 
     /*修改Type类目表*/
     int updateByPrimaryKey(Type record);
@@ -41,8 +35,6 @@ public interface TypeService {
 
     /*批量选择修改Type类目表*/
     int updateBatchSelective(List<Type> list);
-
-//    查
 
     /*查询指定ID的Type类目表信息*/
     Type selectByPrimaryKey(Integer id);

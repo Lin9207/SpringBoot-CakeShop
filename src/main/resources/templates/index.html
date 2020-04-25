@@ -5,17 +5,17 @@
     <title>首页</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <link type="text/css" rel="stylesheet" th:href="@{css/bootstrap.css}">
-    <link type="text/css" rel="stylesheet" th:href="@{css/style.css}">
-    <script type="text/javascript" th:src="@{js/jquery.min.js}"></script>
-    <script type="text/javascript" th:src="@{js/bootstrap.min.js}"></script>
-    <script type="text/javascript" th:src="@{layer/layer.js}"></script>
-    <script type="text/javascript" th:src="@{js/cart.js}"></script>
+    <link type="text/css" rel="stylesheet" th:href="@{~/css/bootstrap.css}">
+    <link type="text/css" rel="stylesheet" th:href="@{~/css/style.css}">
+    <script type="text/javascript" th:src="@{~/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{~/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{~/layer/layer.js}"></script>
+    <script type="text/javascript" th:src="@{~/js/cart.js}"></script>
 </head>
 <body>
 
 <!--header-->
-<div th:replace="~{/commons/commons.html::header(activeType='index.html')}"></div>
+<div th:replace="~{commons/commons.html::header(activeType='index.html')}"></div>
 <!--//header-->
 
 <!--banner-->
@@ -26,10 +26,11 @@
             <span></span>
         </h2>
         <p>今日精选推荐</p>
-        <a class="banner_a" href="javascript:;" th:onclick="'javascript:buy('+${scroll.getId()}+')'">立刻购买</a>
+        <a class="banner_a" href="javascript:" th:onclick="'javascript:buy('+${scroll.getId()}+')'">立刻购买</a>
         <div class="banner-text">
             <a th:href="@{'/good/detail/'+${scroll.getId()}}">
-                <img th:src="@{{cover}(cover=${scroll.getCover()})}" th:alt="${scroll.getName()}" width="350"
+                <img th:src="@{'http://111.230.195.169:8080' + ${scroll.getCover()}}" th:alt="${scroll.getName()}"
+                     width="350"
                      height="350">
             </a>
         </div>
@@ -48,7 +49,7 @@
 
             <div class="col-md-4 gallery-grid glry-two">
                 <a th:href="@{'/good/detail/'+${hostGood.getId()}}">
-                    <img th:src="@{{cover}(cover=${hostGood.getCover()})}" class="img-responsive"
+                    <img th:src="@{'http://111.230.195.169:8080' + ${hostGood.getCover()}}" class="img-responsive"
                          th:alt="${hostGood.getName()}" width="350" height="350"/>
                 </a>
                 <div class="gallery-info galrr-info-two">
@@ -56,7 +57,7 @@
                         <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
                         <a th:href="@{'/good/detail/'+${hostGood.getId()}}">>查看详情</a>
                     </p>
-                    <a class="shop" href="javascript:;" th:onclick="'javascript:buy('+${hostGood.getId()}+')'">立刻购买</a>
+                    <a class="shop" href="javascript:" th:onclick="'javascript:buy('+${hostGood.getId()}+')'">立刻购买</a>
                     <div class="clearfix"></div>
                 </div>
                 <div class="galy-info">
@@ -79,7 +80,7 @@
 
             <div class="col-md-3 gallery-grid ">
                 <a th:href="@{'/good/detail/'+${newGood.getId()}}">
-                    <img th:src="@{{cover}(cover=${newGood.getCover()})}" class="img-responsive"
+                    <img th:src="@{'http://111.230.195.169:8080' +  ${newGood.getCover()}}" class="img-responsive"
                          th:alt="${newGood.getName()}"/>
                 </a>
                 <div class="gallery-info">
@@ -87,7 +88,7 @@
                         <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
                         <a th:href="@{'/good/detail/'+${newGood.getId()}}">查看详情</a>
                     </p>
-                    <a class="shop" href="javascript:;" th:onclick="'javascript:buy('+${newGood.getId()}+')'">立刻购买</a>
+                    <a class="shop" href="javascript:" th:onclick="'javascript:buy('+${newGood.getId()}+')'">立刻购买</a>
                     <div class="clearfix"></div>
                 </div>
                 <div class="galy-info">

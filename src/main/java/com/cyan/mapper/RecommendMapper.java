@@ -8,7 +8,6 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface RecommendMapper {
 
-//=====增:
     /*插入所有字段 - 主键自增,插入Recommend商品推荐表*/
     int insert(Recommend record);
 
@@ -24,12 +23,8 @@ public interface RecommendMapper {
     /*批量插入Recommend商品推荐表*/
     int batchInsert(@Param("list") List<Recommend> list);
 
-//=====删:
-
     /*删除指定ID的Recommend商品推荐表信息*/
     int deleteByPrimaryKey(Integer id);
-
-//=====改:
 
     /*修改Recommend商品推荐表*/
     int updateByPrimaryKey(Recommend record);
@@ -42,8 +37,6 @@ public interface RecommendMapper {
 
     /*批量选择修改Recommend商品推荐表*/
     int updateBatchSelective(List<Recommend> list);
-
-//=====查:
 
     /*查询指定ID的Recommend商品推荐表信息*/
     Recommend selectByPrimaryKey(Integer id);

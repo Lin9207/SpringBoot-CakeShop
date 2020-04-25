@@ -8,7 +8,6 @@
     <link type="text/css" rel="stylesheet" th:href="@{~/css/style.css}">
     <script type="text/javascript" th:src="@{~/js/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{~/js/bootstrap.min.js}"></script>
-    <script type="text/javascript" th:src="@{~/js/simpleCart.min.js}"></script>
 </head>
 <body>
 
@@ -31,18 +30,21 @@
                     <h4>收货信息</h4>
                     <div class="input">
                         <span>收货人<label></label></span>
-                        <input type="text" name="name" th:value="${#httpSession.getAttribute('loginUser').getName()}"
+                        <input type="text" name="name"
+                               th:value="${session.loginUser!=null?session.loginUser.getName():''}"
                                placeholder="请输入收货人">
                     </div>
                     <div class="input">
                         <span>收货电话</span>
-                        <input type="text" name="phone" th:value="${#httpSession.getAttribute('loginUser').getPhone()}"
+                        <input type="text" name="phone"
+                               th:value="${session.loginUser!=null?session.loginUser.getPhone():''}"
                                placeholder="请输入收货电话">
                     </div>
                     <div class="input">
                         <span>收货地址</span>
                         <input type="text" name="address"
-                               th:value="${#httpSession.getAttribute('loginUser').getAddress()}" placeholder="请输入收货地址">
+                               th:value="${session.loginUser!=null?session.loginUser.getAddress():''}"
+                               placeholder="请输入收货地址">
                     </div>
                     <div class="register-but text-center">
                         <input type="submit" value="修改">

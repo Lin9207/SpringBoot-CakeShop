@@ -1,7 +1,6 @@
 package com.cyan.service.inteface;
 
 import com.cyan.pojo.Orderitem;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 public interface OrderitemService{

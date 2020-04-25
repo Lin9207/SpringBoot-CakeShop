@@ -8,6 +8,8 @@ import com.cyan.service.inteface.OrderService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +19,8 @@ import java.util.List;
 @Service
 public class OrderServiceImpl implements OrderService {
 
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Resource
     private OrderMapper orderMapper;
     @Resource
@@ -25,10 +29,10 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public int deleteByPrimaryKey(Integer id) {
-        /*删除订单项*/
+        logger.info("删除订单");
         orderitemMapper.deleteByOrderId(id);
-        /*删除订单*/
         orderMapper.deleteByPrimaryKey(id);
+        logger.info("删除成功");
         return 1;
     }
 
@@ -50,7 +54,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public int insertSelective(Order record) {
-        // 添加订单
+        logger.info("添加订单");
         int success = orderMapper.insert(record);
         // 获得订单id，并设置
         int id = getLastInsertId();
@@ -59,6 +63,7 @@ public class OrderServiceImpl implements OrderService {
         for (Orderitem orderitem : record.getItemMap().values()) {
             orderitemMapper.insert(orderitem);
         }
+        logger.info("添加成功");
         return success;
     }
 
@@ -101,6 +106,7 @@ public class OrderServiceImpl implements OrderService {
     /*根据用户ID查询订单*/
     @Override
     public List<Order> selectAllByUserId(Integer id) {
+        logger.info("查询用户订单");
         /*查询订单*/
         List<Order> orderList = orderMapper.selectAllByUserId(id);
         /*遍历订单-添加订单项*/
@@ -109,14 +115,17 @@ public class OrderServiceImpl implements OrderService {
             List<Orderitem> orderitemList = orderitemMapper.selectAllByOrderId(order.getId());
             order.setItemList(orderitemList);
         }
+        logger.info("查询完成");
         return orderList;
     }
 
     /*根据Status状态查询订单 [0-所有 1-未付款 2-已付款 3-配送中 4-已完成]*/
     @Override
-    public PageInfo<Order> selectAllByStatus(Integer status,Integer pageNum,Integer pageSize) {
+    public PageInfo<Order> selectAllByStatus(Integer status, Integer pageNum, Integer pageSize) {
+        logger.info("根据Status状态查询订单");
+        logger.info("status = " + status);
         /*设置分页*/
-        Page<?> page = PageHelper.startPage(pageNum,pageSize,true);
+        Page<?> page = PageHelper.startPage(pageNum, pageSize, true);
         /*查询订单*/
         List<Order> orderList = orderMapper.selectAllByStatus(status);
         /*遍历订单-添加订单项*/
@@ -125,12 +134,14 @@ public class OrderServiceImpl implements OrderService {
             List<Orderitem> orderitemList = orderitemMapper.selectAllByOrderId(order.getId());
             order.setItemList(orderitemList);
         }
+        logger.info("查询完成");
         return new PageInfo<Order>(orderList);
     }
 
     /*修改订单状态*/
     @Override
     public int updateStatusById(Integer id, Integer status) {
-        return orderMapper.updateStatusById(id,status);
+        logger.info("修改订单状态");
+        return orderMapper.updateStatusById(id, status);
     }
 }

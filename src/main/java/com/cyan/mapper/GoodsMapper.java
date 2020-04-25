@@ -10,8 +10,6 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface GoodsMapper {
 
-//=====增:
-
     /*插入所有字段 - 主键自增,插入good*/
     int insert(Goods record);
 
@@ -27,12 +25,8 @@ public interface GoodsMapper {
     /*批量插入good所有字段*/
     int batchInsert(@Param("list") List<Goods> list);
 
-//=====删:
-
     /*删除指定ID的Good对象信息*/
     int deleteByPrimaryKey(Integer id);
-
-//=====改:
 
     /*修改Good信息*/
     int updateByPrimaryKey(Goods record);
@@ -45,8 +39,6 @@ public interface GoodsMapper {
 
     /*批量选择修改Good信息*/
     int updateBatchSelective(List<Goods> list);
-
-//=====查:
 
     /*查询指定ID的Good对象信息*/
     Goods selectByPrimaryKey(Integer id);

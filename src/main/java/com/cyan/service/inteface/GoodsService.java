@@ -7,8 +7,6 @@ import java.util.List;
 
 public interface GoodsService {
 
-//=====增:
-
     /*插入所有字段 - 主键自增,插入good*/
     int insert(Goods record);
 
@@ -24,12 +22,8 @@ public interface GoodsService {
     /*批量插入good信息*/
     int batchInsert(List<Goods> list);
 
-//=====删:
-
     /*删除指定ID的Good对象信息*/
     int deleteByPrimaryKey(Integer id);
-
-//=====改:
 
     /*修改Good信息*/
     int updateByPrimaryKey(Goods record);
@@ -42,8 +36,6 @@ public interface GoodsService {
 
     /*批量选择修改Good信息*/
     int updateBatchSelective(List<Goods> list);
-
-//=====查:
 
     /*查询指定ID的Good对象信息*/
     Goods selectByPrimaryKey(Integer id);
@@ -58,13 +50,13 @@ public interface GoodsService {
     List<Goods> getNewGoodsList();
 
     /*分页,根据字段name模糊搜索查询*/
-    PageInfo<Goods> getSearchGoods(String searchName, Integer pageNum,Integer pageSize);
+    PageInfo<Goods> getSearchGoods(String searchName, Integer pageNum, Integer pageSize);
 
     /*分页,根据类目ID查询商品*/
-    PageInfo<Goods> selectByTypeId(Integer typeId, Integer pageNum,Integer pageSize);
+    PageInfo<Goods> selectByTypeId(Integer typeId, Integer pageNum, Integer pageSize);
 
     /*分页,根据Recommend推荐表查询 - type(0-所有 1-条幅/2-热销/3-新品)*/
-    PageInfo<Goods> selectByRecommendType(Integer type, Integer pageNum,Integer pageSize);
+    PageInfo<Goods> selectByRecommendType(Integer type, Integer pageNum, Integer pageSize);
 
     // 判断是都为条幅商品
     boolean isScroll(Integer goodId);
@@ -74,5 +66,8 @@ public interface GoodsService {
 
     // 判断是都为新品商品
     boolean isNew(Integer goodId);
+
+    // 根据商品记录表 获取推荐商品
+    List<Goods> selectBySrecords(Integer userid,Integer limitSize);
 
 }

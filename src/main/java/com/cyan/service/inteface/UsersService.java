@@ -7,8 +7,6 @@ import com.github.pagehelper.PageInfo;
 
 public interface UsersService {
 
-//====增
-
     /*插入所有字段 - 主键自增,插入User用户表*/
     int insert(Users record);
 
@@ -27,12 +25,8 @@ public interface UsersService {
     // 用户注册
     boolean register(Users user);
 
-//====删
-
     /*删除指定ID的User用户表信息*/
     int deleteByPrimaryKey(Integer id);
-
-//====改
 
     /*修改User用户表*/
     int updateByPrimaryKey(Users record);
@@ -45,8 +39,6 @@ public interface UsersService {
 
     /*批量选择修改User用户表*/
     int updateBatchSelective(List<Users> list);
-
-//====查
 
     /*查询指定ID的User用户表信息*/
     Users selectByPrimaryKey(Integer id);

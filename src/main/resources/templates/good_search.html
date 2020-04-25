@@ -28,7 +28,7 @@
                 <a th:href="@{'/good/detail/'+${good.getId()}}">
                     <div class="more-product"><span> </span></div>
                     <div class="product-img b-link-stripe b-animate-go  thickbox">
-                        <img th:src="@{${good.getCover()}}" class="img-responsive" th:alt="${good.getName()}"
+                        <img th:src="@{'http://111.230.195.169:8080' + ${good.getCover()}}" class="img-responsive" th:alt="${good.getName()}"
                              width="240" height="240">
                         <div class="b-wrapper">
                             <h4 class="b-animate b-from-left  b-delay03">

@@ -1,13 +1,21 @@
 package com.cyan.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
 import javax.annotation.Resource;
 import java.util.List;
+
 import com.cyan.pojo.Type;
 import com.cyan.mapper.TypeMapper;
 import com.cyan.service.inteface.TypeService;
+
 @Service
-public class TypeServiceImpl implements TypeService{
+public class TypeServiceImpl implements TypeService {
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
+
 
     @Resource
     private TypeMapper typeMapper;
@@ -70,6 +78,9 @@ public class TypeServiceImpl implements TypeService{
     /*查询获取Type类目表所有信息*/
     @Override
     public List<Type> selectAll() {
-        return typeMapper.selectAll();
+        logger.info("查询所有商品类目");
+        List<Type> list = typeMapper.selectAll();
+        logger.info("查询成功");
+        return list;
     }
 }

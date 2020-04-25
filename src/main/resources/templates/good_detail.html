@@ -34,19 +34,22 @@
             <div class="col-md-4 single-grid">
                 <div class="flexslider">
                     <ul class="slides">
-                        <li th:data-thumb="@{${good.getCover()}}">
+                        <li th:data-thumb="@{'http://111.230.195.169:8080' + ${good.getCover()}}">
                             <div class="thumb-image">
-                                <img th:src="@{${good.getCover()}}" data-imagezoom="true" class="img-responsive">
+                                <img th:src="@{'http://111.230.195.169:8080' + ${good.getCover()}}"
+                                     data-imagezoom="true" class="img-responsive">
                             </div>
                         </li>
-                        <li th:data-thumb="@{${good.getImage1()}}">
+                        <li th:data-thumb="@{'http://111.230.195.169:8080' + ${good.getImage1()}}">
                             <div class="thumb-image">
-                                <img th:src="@{${good.getImage1()}}" data-imagezoom="true" class="img-responsive">
+                                <img th:src="@{'http://111.230.195.169:8080' + ${good.getImage1()}}"
+                                     data-imagezoom="true" class="img-responsive">
                             </div>
                         </li>
-                        <li th:data-thumb="@{${good.getImage2()}}">
+                        <li th:data-thumb="@{'http://111.230.195.169:8080' + ${good.getImage2()}}">
                             <div class="thumb-image">
-                                <img th:src="@{${good.getImage2()}}" data-imagezoom="true" class="img-responsive">
+                                <img th:src="@{'http://111.230.195.169:8080' + ${good.getImage2()}}"
+                                     data-imagezoom="true" class="img-responsive">
                             </div>
                         </li>
                     </ul>
@@ -65,7 +68,7 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="btn_form">
-                    <a href="javascript:;" class="add-cart item_add" th:onclick="'javascript:buy('+${good.getId()}+')'">加入购物车</a>
+                    <a href="javascript:" class="add-cart item_add" th:onclick="'javascript:buy('+${good.getId()}+')'">加入购物车</a>
                 </div>
             </div>
             <div class="col-md-4 single-grid1">
@@ -79,6 +82,40 @@
         </div>
     </div>
 </div>
+
+<!--related-products-->
+<div class="related-products" style="padding: 2em 0">
+    <div class="container">
+        <h3>猜你喜欢</h3>
+
+        <div class="product-model-sec single-product-grids" style="margin: 2em 0 0 0">
+
+            <div class="product-grid single-product" th:each="recordGoods:${recordSet}">
+                <a th:href="@{'/good/detail/'+${recordGoods.getId()}}">
+                    <div class="more-product"><span> </span></div>
+                    <div class="product-img b-link-stripe b-animate-go  thickbox">
+                        <img th:src="@{'http://111.230.195.169:8080' + ${recordGoods.getCover()}}"  class="img-responsive" th:alt="${recordGoods.getName()}">
+                        <div class="b-wrapper">
+                            <h4 class="b-animate b-from-left  b-delay03">
+                                <button>查看详情</button>
+                            </h4>
+                        </div>
+                    </div>
+                </a>
+                <div class="product-info simpleCart_shelfItem">
+                    <div class="product-info-cust prt_name">
+                        <h4 th:text="${recordGoods.getName()}"></h4>
+                        <span class="item_price" th:text="${'￥ ' + recordGoods.getPrice()}"></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+<!--related-products-->
 
 <!--footer-->
 <div th:replace="~{commons/commons.html::footer}"></div>

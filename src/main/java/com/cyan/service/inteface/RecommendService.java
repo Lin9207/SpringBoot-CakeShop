@@ -2,13 +2,10 @@ package com.cyan.service.inteface;
 
 import java.util.List;
 
-import com.cyan.pojo.Goods;
 import com.cyan.pojo.Recommend;
-import org.apache.ibatis.annotations.Param;
 
 public interface RecommendService{
 
-    //=====增:
     /*插入所有字段 - 主键自增,插入Recommend商品推荐表*/
     int insert(Recommend record);
 
@@ -24,12 +21,8 @@ public interface RecommendService{
     /*批量插入Recommend商品推荐表*/
     int batchInsert(List<Recommend> list);
 
-//=====删:
-
     /*删除指定ID的Recommend商品推荐表信息*/
     int deleteByPrimaryKey(Integer id);
-
-//=====改:
 
     /*修改Recommend商品推荐表*/
     int updateByPrimaryKey(Recommend record);
@@ -42,8 +35,6 @@ public interface RecommendService{
 
     /*批量选择修改Recommend商品推荐表*/
     int updateBatchSelective(List<Recommend> list);
-
-//=====查:
 
     /*查询指定ID的Recommend商品推荐表信息*/
     Recommend selectByPrimaryKey(Integer id);
