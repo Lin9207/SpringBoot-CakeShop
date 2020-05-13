@@ -4,12 +4,12 @@
     <title>支付</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <link type="text/css" rel="stylesheet" th:href="@{~/css/bootstrap.css}">
-    <link type="text/css" rel="stylesheet" th:href="@{~/css/style.css}">
-    <script type="text/javascript" th:src="@{~/js/jquery.min.js}"></script>
-    <script type="text/javascript" th:src="@{~/js/bootstrap.min.js}"></script>
-    <script type="text/javascript" th:src="@{~/layer/layer.js}"></script>
-    <script type="text/javascript" th:src="@{~/js/cart.js}"></script>
+    <link type="text/css" rel="stylesheet" th:href="@{~/cakeshop/css/bootstrap.css}">
+    <link type="text/css" rel="stylesheet" th:href="@{~/cakeshop/css/style.css}">
+    <script type="text/javascript" th:src="@{~/cakeshop/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{~/cakeshop/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{~/cakeshop/layer/layer.js}"></script>
+    <script type="text/javascript" th:src="@{~/cakeshop/js/cart.js}"></script>
 </head>
 <body>
 
@@ -54,7 +54,7 @@
                 <label>
                     <div class="thumbnail">
                         <input type="radio" name="paytype" value="1" checked="checked"/>
-                        <img th:src="@{~/images/wechat.jpg}" alt="微信支付">
+                        <img th:src="@{~/cakeshop/images/wechat.jpg}" alt="微信支付">
                     </div>
                 </label>
             </div>
@@ -62,7 +62,7 @@
                 <label>
                     <div class="thumbnail">
                         <input type="radio" name="paytype" value="2"/>
-                        <img th:src="@{~/images/alipay.jpg}" alt="支付宝支付"> </a>
+                        <img th:src="@{~/cakeshop/images/alipay.jpg}" alt="支付宝支付"> </a>
                     </div>
                 </label>
             </div>
@@ -70,7 +70,7 @@
                 <label>
                     <div class="thumbnail">
                         <input type="radio" name="paytype" value="3"/>
-                        <img th:src="@{~/images/offline.jpg}" alt="货到付款"> </a>
+                        <img th:src="@{~/cakeshop/images/offline.jpg}" alt="货到付款"> </a>
                     </div>
                 </label>
             </div>

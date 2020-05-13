@@ -5,12 +5,12 @@
     <title>首页</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <link type="text/css" rel="stylesheet" th:href="@{~/css/bootstrap.css}">
-    <link type="text/css" rel="stylesheet" th:href="@{~/css/style.css}">
-    <script type="text/javascript" th:src="@{~/js/jquery.min.js}"></script>
-    <script type="text/javascript" th:src="@{~/js/bootstrap.min.js}"></script>
-    <script type="text/javascript" th:src="@{~/layer/layer.js}"></script>
-    <script type="text/javascript" th:src="@{~/js/cart.js}"></script>
+    <link type="text/css" rel="stylesheet" th:href="@{~/cakeshop/css/bootstrap.css}">
+    <link type="text/css" rel="stylesheet" th:href="@{~/cakeshop/css/style.css}">
+    <script type="text/javascript" th:src="@{~/cakeshop/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{~/cakeshop/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{~/cakeshop/layer/layer.js}"></script>
+    <script type="text/javascript" th:src="@{~/cakeshop/js/cart.js}"></script>
 </head>
 <body>
 
@@ -44,9 +44,8 @@
 <div class="gallery">
     <div class="container">
 
-        <div class="alert alert-danger">热销推荐</div>
+        <div class="alert alert-danger"><a th:href="@{/good/recommend(type=2)}">热销推荐</a></div>
         <div class="gallery-grids" th:each="hostGood:${hotList}">
-
             <div class="col-md-4 gallery-grid glry-two">
                 <a th:href="@{'/good/detail/'+${hostGood.getId()}}">
                     <img th:src="@{'http://111.230.195.169:8080' + ${hostGood.getCover()}}" class="img-responsive"
@@ -75,7 +74,7 @@
 
         <div class="clearfix"></div>
 
-        <div class="alert alert-info">新品推荐</div>
+        <div class="alert alert-info"><a th:href="@{/good/recommend(type=3)}">新品推荐</a></div>
         <div class="gallery-grids" th:each="newGood:${newList}">
 
             <div class="col-md-3 gallery-grid ">

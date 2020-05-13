@@ -57,7 +57,7 @@ public class GoodsController {
             recordList = goodsService.selectByRecommendType(2, 1, 10).getList();
         }
         // 随机抽取四个商品
-        for (int i = 0; i < 10; i++) {
+        while (true) {
             if (recordSet.size() >= 4)
                 break;
             Goods goods = recordList.get((int) (Math.random() * recordList.size() + 0));
